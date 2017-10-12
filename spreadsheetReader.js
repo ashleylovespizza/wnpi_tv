@@ -19,7 +19,7 @@ module.exports = gsjson({
         console.log("whatup", results[i]);
         channels.push( newChannel );
     }
-    console.log(channels);
+    console.log('spreadhset reader here ', channels.length);
     return channels;
 
     //console.log(channelData);

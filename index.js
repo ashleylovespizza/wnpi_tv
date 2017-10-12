@@ -9,39 +9,52 @@
 */
 var moment = require('moment');
 
-var gsjson = require('google-spreadsheet-to-json');
-var spreadsheetId = '1GWwkK9Phqy_kOh35o0MD36Ba97p9zW_YHf8oWEcCDl0';
-
-var Channel = require('./channel.js');
+var SPREADSHEET_ID = '1GWwkK9Phqy_kOh35o0MD36Ba97p9zW_YHf8oWEcCDl0';
+var SRC_LOCATION = "/Volumes/WNPI_SRC/wnpi/";
+var INITIALIZED = false;
+var CURR_CHANNEL = 0;
+// let's not get too fancy yet
+//var Channel = require('./channel.js');
 
 var channels = [];
 
 
+function onOffToggle() {
+    if (INITIALIZED) {
 
-function init() {
-
-	channels[1].print();
+    }
 }
 
-var channels_to_import = ['0', '1', '2'];
-gsjson({
-    spreadsheetId: spreadsheetId,
-    worksheet: channels_to_import
-})
-.then(function(results) {
-
-    console.log(results.length);
-    //channelData = result;
-   // console.log(result);
-    for ( var i=0; i<results.length; i++) {
-    	var newChannel = new Channel(i, 'Channel '+ (i+1), results[i])
-    	channels.push( newChannel );
+function changeChannel(new_channel) {
+    if (INITIALIZED) {
+        
     }
-    init();
+}
 
-})
-.catch(function(err) {
-    console.log(err.message);
-    console.log(err.stack);
-});
+function createTvGuide() {
+
+    channels[1].print();
+
+    // todo - pre-create a JSON object representing the whole schedule
+
+    INITIALIZED = true;
+    while(1==1){
+        
+    }
+}
+
+function pullData() {
+
+    require('./spreadsheetReader.js')
+    .then(function(results){
+        channels = results;
+        //console.log('channels:', channels);
+        createTvGuide();
+    })
+    .catch(function(err){ 
+        console.log("ERRAR", err); 
+    });
+
+}
+pullData();
 

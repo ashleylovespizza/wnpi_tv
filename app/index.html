@@ -1,50 +1,47 @@
+<!DOCTYPE html>
 <html>
-	<head>
-		<title>
-			WNPI TV
-		</title>
+<head>
+  <title>Welcome to Vue</title>
+  <link href="http://vjs.zencdn.net/6.2.8/video-js.css" rel="stylesheet">
+
+  <script src="http://vjs.zencdn.net/6.2.8/video.js"></script>
+
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="app">
+    
+    <div id="controls">
+
+      <div id="onoff">ON</div>
+
+      <div id="up">UP</div>
+      <div id="down">DOWN</div>
+    </div>
+    
+
+    <video id="my-video" class="video-js" controls preload="auto" width="1280" height="720"
+    poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
+      <source src="MY_VIDEO.mp4" type='video/mp4'>
+      <p class="vjs-no-js">
+        To view this video please enable JavaScript, and consider upgrading to a web browser that
+        <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+      </p>
+    </video>
 
 
-  		<link href="http://vjs.zencdn.net/6.2.8/video-js.css" rel="stylesheet">
-  		<script src="index.js" type="text/javascript"></script>
+  </div>
 
-	</head>
-	<body>
-	  <div id="controls">
-
-	  	<div id="onoff">ON</div>
-
-	  	<div id="up">UP</div>
-	  	<div id="down">DOWN</div>
-	  </div>
-	  
-
-	  <video id="my-video" class="video-js" controls preload="auto" width="1280" height="720"
-	  poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
-	    <source src="MY_VIDEO.mp4" type='video/mp4'>
-	    <p class="vjs-no-js">
-	      To view this video please enable JavaScript, and consider upgrading to a web browser that
-	      <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-	    </p>
-	  </video>
-
-	  <script src="http://vjs.zencdn.net/6.2.8/video.js"></script>
-
-	  <script type="text/javascript">
-
-	  	document.getElementById('onoff').addEventListener('click', function () {
-		  onOffToggle();
-		});
-
-	  	document.getElementById('up').addEventListener('click', function () {
-		  changeChannel('up');
-		});
-
-	  	document.getElementById('down').addEventListener('click', function () {
-		  changeChannel('down');
-		});
-
-
-	  </script>
-	</body>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        
+      },
+      methods: {
+        
+      }
+    })
+  </script>
+</body>
 </html>

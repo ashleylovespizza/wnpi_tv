@@ -34,26 +34,51 @@ module.exports = class TvGuide {
 
         instance.channels[1].print();
 
-        // todo - pre-create a JSON object representing the whole schedule
+        // assume all folders rn
+        for (let i=0; i<instance.channels.length; i++) {
+            
+        }
+        for(let i in instance.channels) {
+          for (let j in instance.channels[i]) {
+            console.log(instance.channels[i][j])
+            if ('content' in instance.channels[i][j]) {
+
+              console.log(instance.channels[i][j]['content']);
+              var folderName = instance.channels[i][j]['content'];
+              FOLDERS[folderName] = [];
+
+              if (FOLDERS[folderName].length == 0) {
+                var files = fs.readdirSync(folderName);
+                for (f in files) {
+                  if ( (/\.(avi|mov|mkv|mp4)$/i).test(files[f])) {
+                    FOLDERS[folderName].push(files[f])
+                  }
+
+                }
+
+              }
+                    
+            }
+          }
+        }
+
 
         instance.initialized = true;
-        return {'tv': 'bar', 'baz': 'boo'};
-        // while(1==1){
-            
-        // }
+        return instance.channels;
+        
     }
 
     init() {
 
         require('./spreadsheetReader.js')
         .then(function(results){
-            console.log("THEN!!!")
+            //console.log("THEN!!!")
             instance.channels = results;
             //console.log('channels:', channels);
             instance.createTvGuide();
         })
         .catch(function(err){ 
-            console.log("ERRAR", err); 
+            //console.log("ERRAR", err); 
         });
 
     }

@@ -5,43 +5,105 @@
   <link href="http://vjs.zencdn.net/6.2.8/video-js.css" rel="stylesheet">
 
   <script src="http://vjs.zencdn.net/6.2.8/video.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+  crossorigin="anonymous"></script>
 
-  <script src="https://unpkg.com/vue"></script>
+  <link rel="stylesheet" type="text/css" href="main.css"> 
+
+
 </head>
 <body>
   <div id="app">
     
     <div id="controls">
-
       <div id="onoff">ON</div>
-
       <div id="up">UP</div>
       <div id="down">DOWN</div>
     </div>
-    
 
-    <video id="my-video" class="video-js" controls preload="auto" width="1280" height="720"
-    poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
-      <source src="MY_VIDEO.mp4" type='video/mp4'>
-      <p class="vjs-no-js">
-        To view this video please enable JavaScript, and consider upgrading to a web browser that
-        <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-      </p>
-    </video>
+    <div id="video-container">
 
+      <video id="tv-player" class="video-js vjs-fluid"></video>
+<!-- 
+      <video id="my-video" class="video-js vjs-fluid" autoplay controls preload="auto" width="100%" height="100%"
+       data-setup="{}">
+        <source src="/videos/fpop/ANNSTEEL.mp4" type='video/mp4'>
+       
+
+      </video> -->
+    </div>
 
   </div>
 
-  <script>
-    new Vue({
-      el: '#app',
-      data: {
-        
-      },
-      methods: {
-        
-      }
-    })
-  </script>
+<script>
+
+  var tvPlayer = videojs('tv-player', {
+    controls: true,
+    autoplay: true,
+    preload: 'auto'
+  });
+
+  var videos = [
+    {"video": "/videos/fpop/ANNSTEEL.mp4", 
+     "currentTime": 0
+   }, 
+   {"video": "/videos/ideo/A.Fistful.of.Dollars.1964.1080p.Bluray.x264.anoXmous_.mp4", 
+    "currentTime": 0
+  },
+  { "video": "/videos/prince/PilatesFix.mp4",
+    "currentTime": 0}
+
+  ];
+  var currchannel = 0;
+  var channelChangedAt = new Date();
+  tvPlayer.src(videos[currchannel]['video']);
+
+  function updateChannel(){
+
+    var currTime = new Date();
+    var timeDiff = Math.abs(currTime.getTime() - channelChangedAt.getTime());
+
+    var diffSeconds = (timeDiff / (1000));
+    channelChangedAt = currTime;
+
+    console.log("time passed: "+diffSeconds)
+    console.log("now play "+videos[currchannel]['video'])
+
+
+    tvPlayer.src(videos[currchannel]['video']);
+    var newtime = videos[currchannel]['currentTime'] + diffSeconds
+    console.log("play at "+newtime);
+   
+    tvPlayer.on('loadedmetadata', function() {
+      tvPlayer.currentTime(newtime);
+    });
+
+
+    console.log(tvPlayer.currentTime())
+  }
+
+
+  $("#up").click(function(){
+    // get current time
+    videos[currchannel]['currentTime'] = tvPlayer.currentTime();
+    currchannel++;
+    currchannel = currchannel % videos.length;
+    updateChannel();
+  })
+
+
+  $("#down").click(function(){
+    videos[currchannel]['currentTime'] = tvPlayer.currentTime();
+
+    currchannel--;
+    currchannel = (currchannel < 0) ? videos.length-1 : currchannel;
+    currchannel = currchannel % videos.length;
+    updateChannel();
+  })
+
+
+</script>
 </body>
 </html>

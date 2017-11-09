@@ -50,7 +50,7 @@ module.exports = class TvGuide {
                     console.log(line['content'])
                     var folder = SRC_LOCATION + line['content'];
                     instance.folders.push(folder);
-                    // and get its legth
+                    // and get its length
                     getDuration(folder).then((duration) => {
                       console.log(duration);
                     });

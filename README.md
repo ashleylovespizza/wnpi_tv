@@ -2,7 +2,12 @@
 homemade custom programmed TV for charlie and me
 
 
-idea is
+# to run
+server (on port 3000): `forever -w server.js `
+client (on port 8080): `cd app && npm run dev`
+
+
+# idea is
 
 backend engine - keeps track of state
 - pings spreadsheet every X minutes (30 is probably plenty?)

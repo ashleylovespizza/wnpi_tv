@@ -1,0 +1,11 @@
+#video-container {
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+    max-width: 1920px;
+    height: 70%;
+}
+video {
+margin: 0 auto 30px;
+    width: 100%;
+}

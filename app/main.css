@@ -1,11 +1,96 @@
+body {
+	background: #111;
+	}
+
+
 #video-container {
     margin: 0 auto;
-    position: relative;
+    z-index: 1;
     text-align: center;
-    max-width: 1920px;
-    height: 70%;
+
+	position: fixed;
+	top: 50%;
+	left: 50%;
+
+	width: 100vw;
+	height: 100vh;
+
+	transform: translate(-50%, -50%);
+	content: " ";
+	overflow: hidden;
+/*  background: #16222A;
+
+  background: -webkit-linear-gradient(to left, #16222A , #3A6073);
+  background: linear-gradient(to left, #16222A , #3A6073);
+  */
+  background: #fff;
+  background-size: cover;
+  
 }
-video {
-margin: 0 auto 30px;
-    width: 100%;
+.video-js {
+	background: #fff;
+}
+
+
+video, #tv-player, .video-js, .vjs-default-skin
+{
+  position: fixed; 
+  right: 0; 
+  bottom: 0;
+  min-width: 100%; 
+  min-height: 100%;
+  width: auto; 
+  height: auto; 
+  z-index: -100;
+}
+
+
+
+#guard {
+	background: black;
+	position: absolute;
+	z-index: 100;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: none;
+}
+#guard.off {
+	display: block;
+}
+
+#static {
+	background: url(static.gif) no-repeat;
+	background-size: cover;
+	display: none;
+	position: absolute;
+	z-index: 101;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+
+}
+#static.changechannel {
+	display: block;
+}
+
+#controls {
+	position: absolute;
+	z-index: 200;
+	top: 0;
+	height: 5%;
+	background: blue;
+}
+#controls div {
+	display: inline-block;
+}
+#onoff {
+	background: black;
+	color: white;
+}
+#onoff.on {
+	background: red;
+	color: white;
 }

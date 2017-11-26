@@ -3,7 +3,7 @@
 <head>
   <title>Welcome to Vue</title>
 
-  <script src="http://vjs.zencdn.net/6.2.8/video.js"></script>
+
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
 
@@ -12,37 +12,47 @@
   integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
   crossorigin="anonymous"></script>
 
-  <script src="main.js"></script>
+
+
+  <script src='/js/lib/three.min.js'></script>
+  <script src='/js/lib/dat.gui.min.js'></script>
+  <script src='/js/lib/stats.min.js'></script>
+  <script src='/js/lib/postprocessing/EffectComposer.js'></script>
+  <script src='/js/lib/postprocessing/RenderPass.js'></script>
+  <script src='/js/lib/postprocessing/ShaderPass.js'></script>
+  <script src='/js/lib/postprocessing/MaskPass.js'></script> 
+  <script src='/js/lib/shaders/CopyShader.js'></script>
+  <script src='/js/lib/shaders/FilmShader.js'></script>
+  <script src='/js/lib/shaders/RGBShiftShader.js'></script>
+  <script src='js/BadTVShader.js'></script>
+  <script src='js/StaticShader.js'></script>
 
 
 
-  <link href="http://vjs.zencdn.net/6.2.8/video-js.css" rel="stylesheet">
+  <script src="js/main.js"></script>
+
 
   <link rel="stylesheet" type="text/css" href="main.css"> 
 
 
 </head>
 <body>
+
   <div id="app">
     
     <div id="controls">
       <div id="onoff" class="on">POWER</div>
       <div id="up">UP</div>
       <div id="down">DOWN</div>
+
+  <div id='info'>BadTV Shader for Three.js by @felixturner. Click to randomize.</div>
+  
     </div>
 
     
     <div id="video-container">
       <div id="static"></div>
-
-      <video id="tv-player" class="video-js vjs-default-skin"></video>
-<!-- 
-      <video id="my-video" class="video-js vjs-fluid" autoplay controls preload="auto" width="100%" height="100%"
-       data-setup="{}">
-        <source src="/videos/fpop/ANNSTEEL.mp4" type='video/mp4'>
-       
-
-      </video> -->
+      <div id='container'></div>
     </div>
 
   </div>

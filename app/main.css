@@ -14,7 +14,7 @@ body {
 	}
 
 
-	
+
 
 #video-container {
     margin: 0 auto;
@@ -92,7 +92,8 @@ video, #tv-player, .video-js, .vjs-default-skin
 #controls {
 	position: absolute;
 	z-index: 200;
-	top: 0;
+	bottom: 0;
+	right: 0;
 	height: 5%;
 	background: blue;
 }

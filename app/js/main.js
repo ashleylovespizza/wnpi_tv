@@ -79,7 +79,7 @@ $(document).ready(function(){
       //init renderer
       renderer = new THREE.WebGLRenderer();
       renderer.setSize( 800, 600 );
-      document.body.appendChild( renderer.domElement );
+      document.getElementById("canvas").appendChild( renderer.domElement );
 
       //POST PROCESSING
       //Create Shader Passes
@@ -266,9 +266,9 @@ $(document).ready(function(){
 
 
 
-    
 
-  // tvPlayer.src(videos[currchannel]['video']);
+
+  // // tvPlayer.src(videos[currchannel]['video']);
 
 
 

@@ -95,7 +95,7 @@ $(document).ready(function(){
 
       //Init DAT GUI control panel
       badTVParams = {
-        mute:true,
+        mute:false,
         show: true,
         distortion: 3.0,
         distortion2: 1.0,
@@ -284,19 +284,22 @@ $(document).ready(function(){
 
     console.log("now play "+videos[currchannel]['video'])
 
-    tvPlayer.src(videos[currchannel]['video']);
+   /// tvPlayer.src(videos[currchannel]['video']); 
+    video.src = videos[currchannel]['video'];
+    console.log(video)
+
     var newtime = diffSeconds
     console.log("play at "+newtime);
    
-    tvPlayer.on('loadedmetadata', function() {
-      tvPlayer.currentTime(newtime);
-      setTimeout(function() {
-        $("#static").removeClass("changechannel");
-      }, 300);
-    });
+    // tvPlayer.on('loadedmetadata', function() {
+    //   tvPlayer.currentTime(newtime);
+    //   setTimeout(function() {
+    //     $("#static").removeClass("changechannel");
+    //   }, 300);
+    // });
 
 
-    console.log(tvPlayer.currentTime())
+    // console.log(tvPlayer.currentTime())
   }
 
 

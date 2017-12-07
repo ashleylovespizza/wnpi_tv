@@ -70,6 +70,24 @@ $(document).ready(function(){
       plane.z = 0;
       plane.scale.x = plane.scale.y = 1.45;
 
+      // add text plane
+      var loader = new THREE.FontLoader();
+
+      loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
+
+        var geometry = new THREE.TextGeometry( 'CHANNEL 3', {
+          font: font,
+          size: 80,
+          height: 5,
+          curveSegments: 12,
+          bevelEnabled: true,
+          bevelThickness: 10,
+          bevelSize: 8,
+          bevelSegments: 5
+        } );
+      } );
+
+
       //add stats
       stats = new Stats();
       stats.domElement.style.position = 'absolute';
@@ -285,17 +303,32 @@ $(document).ready(function(){
     console.log("now play "+videos[currchannel]['video'])
 
    /// tvPlayer.src(videos[currchannel]['video']); 
-    video.src = videos[currchannel]['video'];
+   video.pause();
+      video.src = videos[currchannel]['video'];
+      video.load();
+
+
+    ///////video.src = videos[currchannel]['video'];
     console.log(video)
 
     var newtime = diffSeconds
     console.log("play at "+newtime);
-   
+
+    video.addEventListener('loadedmetadata', function() {
+
+      this.currentTime = newtime;
+        setTimeout(function() {
+
+      video.play();
+        $("#static").removeClass("changechannel");
+      }, 300);
+
+    }, false);
+
+
     // tvPlayer.on('loadedmetadata', function() {
     //   tvPlayer.currentTime(newtime);
-    //   setTimeout(function() {
-    //     $("#static").removeClass("changechannel");
-    //   }, 300);
+    
     // });
 
 
@@ -354,12 +387,12 @@ $(document).ready(function(){
        onofftimeline.reverse();
 
       //$("#guard").removeClass("off");
-      tvPlayer.play();
+      video.play();
       updateChannel();
     } else {
       // turn off
     onofftimeline.restart();
-      tvPlayer.pause();
+      video.pause();
       //$("#guard").addClass("off");
     }
 

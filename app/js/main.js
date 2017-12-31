@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
 
+
     var camera, scene, renderer;
     var video, videoTexture,videoMaterial;
     var composer;
@@ -15,15 +16,37 @@ $(document).ready(function(){
 
 
     var videos = [
-      {"video": "/videos/fpop/ANNSTEEL.mp4", 
-       "startTime": 0
-     }, 
-     {"video": "/videos/ideo/A.Fistful.of.Dollars.1964.1080p.Bluray.x264.anoXmous_.mp4", 
+    { "video": "videos/hustle.mp4",
       "startTime": 0
     },
-    { "video": "/videos/prince/Evil.Dead.II.1987.1080p.BRrip.x264.GAZ.mp4",
-      "startTime": 0}
 
+    { "video": "videos/birdie.mp4",
+      "startTime": 0
+    },
+    {"video": "videos/fuzzy.mp4", 
+       "startTime": 0
+     }, 
+
+    { "video": "videos/moogf.mp4",
+      "startTime": 0
+    },
+
+     {"video": "videos/affoa.mp4", 
+      "startTime": 0
+    },
+    { "video": "videos/alchemy.mp4",
+      "startTime": 0
+    },
+    { "video": "videos/agile.mp4",
+      "startTime": 0
+    },
+    
+    { "video": "videos/salt.mp4",
+      "startTime": 0
+    },
+    { "video": "videos/extras.mp4",
+      "startTime": 0
+    }
     ];
 
 
@@ -70,22 +93,22 @@ $(document).ready(function(){
       plane.z = 0;
       plane.scale.x = plane.scale.y = 1.45;
 
-      // add text plane
-      var loader = new THREE.FontLoader();
+      // // add text plane
+      // var loader = new THREE.FontLoader();
 
-      loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
+      // loader.load( 'fonts/helvetiker_regular.typeface.json', function ( font ) {
 
-        var geometry = new THREE.TextGeometry( 'CHANNEL 3', {
-          font: font,
-          size: 80,
-          height: 5,
-          curveSegments: 12,
-          bevelEnabled: true,
-          bevelThickness: 10,
-          bevelSize: 8,
-          bevelSegments: 5
-        } );
-      } );
+      //   var geometry = new THREE.TextGeometry( 'CHANNEL 3', {
+      //     font: font,
+      //     size: 80,
+      //     height: 5,
+      //     curveSegments: 12,
+      //     bevelEnabled: true,
+      //     bevelThickness: 10,
+      //     bevelSize: 8,
+      //     bevelSegments: 5
+      //   } );
+      // } );
 
 
       //add stats
@@ -202,20 +225,39 @@ $(document).ready(function(){
       filmPass.uniforms[ 'nIntensity' ].value = filmParams.nIntensity;
     }
 
-
+    var randomizer = 0;
     function randomizeParams() {
+      randomizer++;
 
-      if (Math.random() <0.2){
+      if (randomizer%3 == 0) {
+        console.log("fixed");
         //you fixed it!
         badTVParams.distortion = 0.1;
-        badTVParams.distortion2 =0.1;
+        badTVParams.distortion2 =0.1 + Math.random()*.6;
         badTVParams.speed =0;
         badTVParams.rollSpeed =0;
         rgbParams.angle = 0;
         rgbParams.amount = 0;
-        staticParams.amount = 0;
+        staticParams.amount =  Math.random()*.07;
 
-      }else{
+      } else if (randomizer%4 == 0) {
+        console.log("REALLY fixed");
+        //you fixed it!
+        badTVParams.distortion = 0;
+        badTVParams.distortion2 =0;
+        badTVParams.speed =0;
+        badTVParams.rollSpeed =0;
+        rgbParams.angle = 0;
+        rgbParams.amount = 0;
+        staticParams.amount =  0.0001;
+      //   staticParams.show = false;
+      //   badTVParams.show = false;
+      //   rgbParams.show = false;
+      filmParams.show = false
+       onToggleShaders();
+
+      } 
+      else {
         badTVParams.distortion = Math.random()*10+0.1;
         badTVParams.distortion2 =Math.random()*10+0.1;
         badTVParams.speed =Math.random()*0.4;
@@ -238,7 +280,9 @@ $(document).ready(function(){
       //order is important 
       composer = new THREE.EffectComposer( renderer);
       composer.addPass( renderPass );
-      
+
+
+
       if (filmParams.show){
         composer.addPass( filmPass );
       }
@@ -289,10 +333,14 @@ $(document).ready(function(){
   // // tvPlayer.src(videos[currchannel]['video']);
 
 
-
+  var channuminterval = null;
   // CHANNEL SWITCHING
   /////////////////////
   function updateChannel(){
+      $("#channelnum").removeClass('visible');
+    clearInterval(channuminterval);
+    channuminterval = null;
+
 
     var currTime = new Date();
     var timeDiff = Math.abs(currTime.getTime() - videos[currchannel]['startTime'].getTime());
@@ -307,7 +355,11 @@ $(document).ready(function(){
       video.src = videos[currchannel]['video'];
       video.load();
 
-
+    $("#channelnum").html(String(currchannel+1))
+    $("#channelnum").addClass('visible');
+    channuminterval = setInterval(function(){
+      $("#channelnum").removeClass('visible');
+    }, 1200);
     ///////video.src = videos[currchannel]['video'];
     console.log(video)
 
@@ -336,12 +388,57 @@ $(document).ready(function(){
   }
 
 
-  $("#up").click(function(){
-    $("#static").addClass("changechannel");
+function channelChange() {
+  $("#static").addClass("changechannel");
     currchannel++;
     currchannel = currchannel % videos.length;
     updateChannel();
-  })
+}
+
+document.onkeydown = checkKey;
+
+function checkKey(e) {
+
+    e = e || window.event;
+
+    if (e.keyCode == '38') {
+        // up arrow
+        channelChange();
+    }
+    else if (e.keyCode == '40') {
+        // down arrow
+         $("#static").addClass("changechannel");
+
+        currchannel--;
+        currchannel = (currchannel < 0) ? videos.length-1 : currchannel;
+        currchannel = currchannel % videos.length;
+        updateChannel();
+
+    }
+    else if (e.keyCode == '32') {
+      //space
+      $("#onoff").click();
+    }
+   else if (e.keyCode == '49' 
+          || e.keyCode == '50' 
+          || e.keyCode == '51' 
+          || e.keyCode == '52' 
+          || e.keyCode == '53' 
+          || e.keyCode == '54' 
+          || e.keyCode == '55' 
+          || e.keyCode == '56' 
+          || e.keyCode == '57' ) {
+    // 1
+  console.log("alksdfjlkfj"+e.keyCode)
+    currchannel = Number(e.keyCode) - 49;
+    updateChannel();
+   }
+
+}
+
+
+
+  $("#up").click(channelChange)
 
 
   $("#down").click(function(){

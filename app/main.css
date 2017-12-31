@@ -15,6 +15,20 @@ body {
 .dg.ac {
 	z-index: 9999;
 }
+#controls { display: none; }
+
+#channelnum {
+	position: fixed;
+	top: 45px;
+	z-index: 999999;
+	left: 45px;
+	font-family: 'Orbitron', sans-serif;
+	color: #39ff14;
+	font-size: 120px;
+	display: none;
+}
+#channelnum.visible { 
+display: block; }
 
 
 
@@ -59,7 +73,7 @@ video, #tv-player, .video-js, .vjs-default-skin
   z-index: -100;
 }
 
-
+.dg.ac, #container { display: none !important; }
 
 #guard {
 	background: black;

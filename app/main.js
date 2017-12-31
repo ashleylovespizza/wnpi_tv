@@ -30,17 +30,41 @@ $(document).ready(function(){
     preload: 'auto'
   });
 
-  var videos = [
-    {"video": "/videos/fpop/ANNSTEEL.mp4", 
-     "startTime": 0
-   }, 
-   {"video": "/videos/ideo/A.Fistful.of.Dollars.1964.1080p.Bluray.x264.anoXmous_.mp4", 
-    "startTime": 0
-  },
-  { "video": "/videos/prince/Evil.Dead.II.1987.1080p.BRrip.x264.GAZ.mp4",
-    "startTime": 0}
+    var videos = [
+    { "video": "videos/hustle.mp4",
+      "startTime": 0
+    },
 
-  ];
+    { "video": "videos/birdie.mp4",
+      "startTime": 0
+    },
+    {"video": "videos/fuzzy.mp4", 
+       "startTime": 0
+     }, 
+
+    { "video": "videos/moogf.mp4",
+      "startTime": 0
+    },
+
+     {"video": "videos/affoa.mp4", 
+      "startTime": 0
+    },
+    { "video": "videos/alchemy.mp4",
+      "startTime": 0
+    },
+    { "video": "videos/agile.mp4",
+      "startTime": 0
+    },
+    
+    { "video": "videos/salt.mp4",
+      "startTime": 0
+    },
+    { "video": "videos/extras.mp4",
+      "startTime": 0
+    }
+    ];
+
+
 
   // start out with it turned on
   var currchannel = 0;

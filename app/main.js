@@ -107,6 +107,7 @@ $(document).ready(function(){
       tvPlayer.currentTime(0);
       setTimeout(function() {
         $("#static").removeClass("changechannel");
+        tvPlayer.play();
       }, 300);
   });
 
@@ -132,6 +133,7 @@ $(document).ready(function(){
       tvPlayer.currentTime(newtime);
       setTimeout(function() {
         $("#static").removeClass("changechannel");
+        tvPlayer.play();
       }, 300);
 
       // var tvW = tvPlayer.videoWidth();

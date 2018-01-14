@@ -30,7 +30,7 @@ body {
 .video-js {
 	background: #fff;
 }
-
+body, #tv-player { background: #000;  }
 
 video, #tv-player, .video-js, .vjs-default-skin
 {
@@ -44,7 +44,7 @@ video, #tv-player, .video-js, .vjs-default-skin
   z-index: -100;
 }
 
-
+/* .vjs-tech { object-fit: cover; } */
 
 #guard {
 	background: black;

@@ -64,7 +64,7 @@ $(document).ready(function(){
      { "video": "flightofdragons.mp4",
       "startTime": 0,
       "cardbg": "channelcard_6.gif",
-      "showname": "WNPI Presents: Flight of Dragons"
+      "showname": "<span>WNPI Presents:</span> Flight of Dragons"
     },
      { "video": "startreks01e21.mp4",
       "startTime": 0,
@@ -122,7 +122,7 @@ $(document).ready(function(){
       tvPlayer.play(); 
         console.log("loaded data!!!!", e)
 
-        $("#card").removeClass("changechannel");
+       // $("#card").removeClass("changechannel");
 
     })
 
@@ -164,7 +164,7 @@ $(document).keyup(function(e) {
     $("#card").css("background-image", 'url(/images/' + videos[currchannel]['cardbg'] + ')')
     $("#channelnumber").html(currchannel+1);
     $("#card .currentshowtitle").html(videos[currchannel]['showname']);
-    $("#card .datetime").html( moment().format('dddd MMMM Do YYYY, h:mm a') )
+    $("#card .datetime").html( moment().format('dddd MMMM Do, h:mm a') )
 
     $("#card").addClass("changechannel");
   }

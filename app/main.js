@@ -137,8 +137,8 @@ $(document).ready(function(){
     //console.log("video W: " + tvPlayer.videoWidth() + ", browser width: "+$("#video-container").width())
     //console.log("video H: " + tvPlayer.videoHeight() + ", browser width: "+$("#video-container").height())
 
-    console.log("video ratio is "+ Number(tvH/tvW) )
-    console.log("browser ratio is "+ Number(browserH/browserW));
+    // console.log("video ratio is "+ Number(tvH/tvW) )
+    // console.log("browser ratio is "+ Number(browserH/browserW));
 
     // if video ratio > browser ratio, taller than wide (space on left/right)
     // else , wider than tall (space on top/bottom)

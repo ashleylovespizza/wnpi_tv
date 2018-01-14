@@ -35,63 +35,40 @@ $(document).ready(function(){
   });
   window.tvPlayer = tvPlayer;
 
-    var videos = [
+  var videos = [
     { "video": "wallE.mp4",
-      "startTime": 0
+      "startTime": 0,
+      "cardbg": "channelcard_1.jpg"
     },
     { "video": "killerwhale.mp4",
-      "startTime": 0
+      "startTime": 0,
+      "cardbg": "channelcard_2.jpg"
     },
-
     { "video": "sesamestreet.mp4",
-      "startTime": 0
-    },
-    
+      "startTime": 0,
+      "cardbg": "channelcard_3.jpg"
+    },  
     { "video": "misterrogers.mp4",
-      "startTime": 0
+      "startTime": 0,
+      "cardbg": "channelcard_4.jpg"
     },
      { "video": "bugsbunny.mp4",
-      "startTime": 0
+      "startTime": 0,
+      "cardbg": "channelcard_5.jpg"
     },
      { "video": "flightofdragons.mp4",
-      "startTime": 0
+      "startTime": 0,
+      "cardbg": "channelcard_6.gif"
     },
      { "video": "startreks01e21.mp4",
-      "startTime": 0
+      "startTime": 0,
+      "cardbg": "channelcard_7.gif"
     },
     { "video": "columbo_lovelybutlethal.mp4",
-      "startTime": 0
+      "startTime": 0,
+      "cardbg": "channelcard_8.jpg"
     },
-
-
-    // { "video": "birdie.mp4",
-    //   "startTime": 0
-    // },
-    // {"video": "videos/fuzzy.mp4", 
-    //    "startTime": 0
-    //  }, 
-
-    // { "video": "videos/moogf.mp4",
-    //   "startTime": 0
-    // },
-
-    //  {"video": "videos/affoa.mp4", 
-    //   "startTime": 0
-    // },
-    // { "video": "videos/alchemy.mp4",
-    //   "startTime": 0
-    // },
-    // { "video": "videos/agile.mp4",
-    //   "startTime": 0
-    // },
-    
-    // { "video": "videos/salt.mp4",
-    //   "startTime": 0
-    // },
-    // { "video": "videos/extras.mp4",
-    //   "startTime": 0
-    // }
-    ];
+  ];
 
 
 
@@ -102,15 +79,43 @@ $(document).ready(function(){
   for (i in videos) {
     videos[i]['startTime'] = channelChangedAt;
   }
-  tvPlayer.src(USB_ROOT + videos[currchannel]['video']);
 
-  tvPlayer.on('loadedmetadata', function() {
-      tvPlayer.currentTime(0);
-      setTimeout(function() {
-        $("#static").removeClass("changechannel");
+  // INITIAL CHANNEL SET
+  tvPlayer.src(USB_ROOT + videos[currchannel]['video']);
+  // tvPlayer.on('loadedmetadata', function() {
+  //     tvPlayer.currentTime(0);
+  //     setTimeout(function() {
+  //       tvPlayer.play();
+  //       $("#channel").removeClass("changechannel");
+  //     }, 300);
+  // });
+
+
+  // todo - do i need this?
+    // tvPlayer.on('loadedmetadata', function(e){     
+    // });
+
+    tvPlayer.on('loadeddata', function(e){ 
+     
+        console.log("loaded data!!!!", e)
+
+        console.log("loaded META data!!!!", e)
+
+        var currTime = new Date();
+        var timeDiff = Math.abs(currTime.getTime() - videos[currchannel]['startTime'].getTime());
+        var diffSeconds = (timeDiff / (1000));
+        channelChangedAt = currTime;
+
+        var newtime = diffSeconds
+        console.log("play at "+newtime);
+
+        // TODO - duration mod with curr time for looping time
+
+        tvPlayer.currentTime(newtime);
+        $("#card").removeClass("changechannel");
         tvPlayer.play();
-      }, 300);
-  });
+
+    })
 
 
   // CHANNEL SWITCHING
@@ -120,55 +125,7 @@ $(document).ready(function(){
     console.log("now play "+USB_ROOT + videos[currchannel]['video'])
 
     tvPlayer.src(USB_ROOT + videos[currchannel]['video']);
-
-   
-    tvPlayer.on('loadedmetadata', function() {
-
-      
-      var currTime = new Date();
-      var timeDiff = Math.abs(currTime.getTime() - videos[currchannel]['startTime'].getTime());
-      var diffSeconds = (timeDiff / (1000));
-      channelChangedAt = currTime;
-
-      var newtime = diffSeconds
-      console.log("play at "+newtime);
-
-
-      tvPlayer.currentTime(newtime);
-
-        console.log("SET::  "+tvPlayer.currentTime())
-       tvPlayer.play();
-        console.log("actually playing at:  "+tvPlayer.currentTime())
-
-      setTimeout(function() {
-        $("#static").removeClass("changechannel");
-
-
-
-      }, 300);
-
-      // var tvW = tvPlayer.videoWidth();
-      // var tvH = tvPlayer.videoHeight();
-
-      // var browserW = $("#video-container").width()
-      // var browserH = $("#video-container").height()
-
-    //console.log("video W: " + tvPlayer.videoWidth() + ", browser width: "+$("#video-container").width())
-    //console.log("video H: " + tvPlayer.videoHeight() + ", browser width: "+$("#video-container").height())
-
-    // console.log("video ratio is "+ Number(tvH/tvW) )
-    // console.log("browser ratio is "+ Number(browserH/browserW));
-
-    // if video ratio > browser ratio, taller than wide (space on left/right)
-    // else , wider than tall (space on top/bottom)
-      // if ( (tvH/tvW) > (browserH/browserW) ) {
-      //   // taller than wide, space on left/right
-
-      //   // stretch video
-      // } else {
-      //   //  wider than tall (space on top/bottom)
-      // }
-    });
+    
 
 
   }
@@ -194,20 +151,29 @@ $(document).keyup(function(e) {
     changeChannel('down');
   })
 
+  function showChannelCard() {
+    $("#card").css("background-image", 'url(/images/' + videos[currchannel]['cardbg'] + ')')
+    $("#channelnumber").html(currchannel);
+    $("#card .currentshowtitle").html(videos[currchannel]['video']);
+    $("#card .datetime").html( moment().format('dddd MMMM Do YYYY, h:mm a') )
+
+    $("#card").addClass("changechannel");
+  }
 
   function changeChannel(direction){
     if (direction == "up") {
-       $("#static").addClass("changechannel");
       currchannel++;
       currchannel = currchannel % videos.length;
+
+      showChannelCard();
       updateChannel();
     }
     else if (direction == "down") {
-        $("#static").addClass("changechannel");
-
       currchannel--;
       currchannel = (currchannel < 0) ? videos.length-1 : currchannel;
       currchannel = currchannel % videos.length;
+
+      showChannelCard();
       updateChannel();
     }
   }

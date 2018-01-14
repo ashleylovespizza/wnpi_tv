@@ -7,6 +7,7 @@
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
 
+  <script src="js/moment.js"></script>
   <script
   src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
   integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
@@ -31,6 +32,16 @@
 
     
     <div id="video-container">
+      <div id="card">
+        <div class="info">
+          <h1>CHANNEL <span id="channelnumber"></span></h1>
+          <p>Now showing:</p>
+          <p class="currentshowtitle"></p>
+          <p class="datetime"></p>
+        </div>
+        <div class="cover"></div>
+      </div>
+
       <div id="static"></div>
 
       <video id="tv-player" class="video-js vjs-default-skin"></video>

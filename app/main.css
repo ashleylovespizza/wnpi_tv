@@ -1,7 +1,7 @@
 body {
 	background: #111;
-	}
-
+}
+* {cursor: none;}
 
 #video-container {
     margin: 0 auto;
@@ -70,11 +70,48 @@ video, #tv-player, .video-js, .vjs-default-skin
 	left: 0;
 	right: 0;
 	bottom: 0;
-
 }
-#static.changechannel {
+#static.changechannel,
+#card.changechannel {
 	display: block;
 }
+
+#card {
+	background: no-repeat;
+	background-size: cover;
+
+	display: none;
+	position: absolute;
+	z-index: 101;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	padding: 10%;
+
+	font-family: sans-serif;
+	color: yellow;
+}
+#card .cover {
+	background: #000;
+	opacity: .4;
+	position: absolute;
+	z-index: 5;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+#card .info {
+	position: absolute;
+	z-index: 50;
+	top: 8%;
+	left: 8%;
+	right: 8%;
+	bottom: 8%;
+	text-align: left;
+}
+
 
 #controls {
 	position: absolute;

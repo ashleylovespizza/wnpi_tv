@@ -116,24 +116,30 @@ $(document).ready(function(){
   /////////////////////
   function updateChannel(){
 
-    var currTime = new Date();
-    var timeDiff = Math.abs(currTime.getTime() - videos[currchannel]['startTime'].getTime());
-
-    var diffSeconds = (timeDiff / (1000));
-    channelChangedAt = currTime;
-
     console.log("now play "+USB_ROOT + videos[currchannel]['video'])
 
     tvPlayer.src(USB_ROOT + videos[currchannel]['video']);
-    var newtime = diffSeconds
-    console.log("play at "+newtime);
 
    
     tvPlayer.on('loadedmetadata', function() {
+
+      
+      var currTime = new Date();
+      var timeDiff = Math.abs(currTime.getTime() - videos[currchannel]['startTime'].getTime());
+      var diffSeconds = (timeDiff / (1000));
+      channelChangedAt = currTime;
+
+      var newtime = diffSeconds
+      console.log("play at "+newtime);
+
+
       tvPlayer.currentTime(newtime);
       setTimeout(function() {
         $("#static").removeClass("changechannel");
         tvPlayer.play();
+
+        console.log("actually playing at:  "+tvPlayer.currentTime())
+
       }, 300);
 
       // var tvW = tvPlayer.videoWidth();
@@ -160,7 +166,6 @@ $(document).ready(function(){
     });
 
 
-    console.log(tvPlayer.currentTime())
   }
 
 

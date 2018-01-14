@@ -33,6 +33,7 @@ $(document).ready(function(){
     loop: true,
     preload: 'auto'
   });
+  window.tvPlayer = tvPlayer;
 
     var videos = [
     { "video": "wallE.mp4",

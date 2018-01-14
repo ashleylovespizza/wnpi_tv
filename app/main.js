@@ -92,13 +92,8 @@ $(document).ready(function(){
 
 
   // todo - do i need this?
-    // tvPlayer.on('loadedmetadata', function(e){     
-    // });
-
-    tvPlayer.on('loadeddata', function(e){ 
-     
-        console.log("loaded data!!!!", e)
-
+    tvPlayer.on('loadedmetadata', function(e){
+        
         console.log("loaded META data!!!!", e)
 
         var currTime = new Date();
@@ -112,8 +107,14 @@ $(document).ready(function(){
         // TODO - duration mod with curr time for looping time
 
         tvPlayer.currentTime(newtime);
+        tvPlayer.play(); 
+    });
+
+    tvPlayer.on('loadeddata', function(e){ 
+      tvPlayer.play(); 
+        console.log("loaded data!!!!", e)
+
         $("#card").removeClass("changechannel");
-        tvPlayer.play();
 
     })
 

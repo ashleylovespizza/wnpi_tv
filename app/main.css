@@ -1,7 +1,47 @@
 body {
 	background: #111;
+	font-family: sans-serif;
 }
-* {cursor: none;}
+/** {cursor: none;}*/
+
+
+/* josefin-sans-regular - latin */
+@font-face {
+  font-family: JosefinSans;
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/josefin-sans-v12-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Josefin Sans Regular'), local('JosefinSans-Regular'),
+       url('/fonts/josefin-sans-v12-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/fonts/josefin-sans-v12-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/fonts/josefin-sans-v12-latin-regular.woff') format('woff'), /* Modern Browsers */
+       url('/fonts/josefin-sans-v12-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('/fonts/josefin-sans-v12-latin-regular.svg#JosefinSans') format('svg'); /* Legacy iOS */
+}
+/* josefin-slab-700 - latin */
+@font-face {
+  font-family: JosefinSlab;
+  font-style: normal;
+  font-weight: 700;
+  src: url('/fonts/josefin-slab-v8-latin-700.eot'); /* IE9 Compat Modes */
+  src: local('Josefin Slab Bold'), local('JosefinSlab-Bold'),
+       url('/fonts/josefin-slab-v8-latin-700.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/fonts/josefin-slab-v8-latin-700.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/fonts/josefin-slab-v8-latin-700.woff') format('woff'), /* Modern Browsers */
+       url('/fonts/josefin-slab-v8-latin-700.ttf') format('truetype'), /* Safari, Android, iOS */
+       url('/fonts/josefin-slab-v8-latin-700.svg#JosefinSlab') format('svg'); /* Legacy iOS */
+}
+@font-face {
+    font-family: 'AkzidenzGrotesk';
+    src: url('fonts/AkzidenzGroteskRegular.eot');
+    src: url('fonts/AkzidenzGroteskRegular.eot') format('embedded-opentype'),
+         url('fonts/AkzidenzGroteskRegular.woff2') format('woff2'),
+         url('fonts/AkzidenzGroteskRegular.woff') format('woff'),
+         url('fonts/AkzidenzGroteskRegular.ttf') format('truetype'),
+         url('fonts/AkzidenzGroteskRegular.svg#AkzidenzGroteskRegular') format('svg');
+}
+
+
 
 #video-container {
     margin: 0 auto;
@@ -89,7 +129,7 @@ video, #tv-player, .video-js, .vjs-default-skin
 	bottom: 0;
 	padding: 10%;
 
-	font-family: sans-serif;
+	font-family: AkzidenzGrotesk, sans-serif; /*JosefinSans*/
 	color: yellow;
 }
 #card .cover {
@@ -106,12 +146,65 @@ video, #tv-player, .video-js, .vjs-default-skin
 	position: absolute;
 	z-index: 50;
 	top: 8%;
-	left: 8%;
-	right: 8%;
+	left: 0;
+	right: 0;
 	bottom: 8%;
 	text-align: left;
+
+}
+#card h1 {
+	padding-left: 8%;
+	font-family: JosefinSlab;
+	font-weight: bold;
+	font-size: 38px;
+    text-shadow: 2px 2px #000000;
+    color: white;
 }
 
+#card p {
+	padding-left: 8%;
+	margin: 0;
+
+}
+#card p.now {
+	font-style:italic;
+    margin-top: 8%;
+    font-size: 20px;
+    padding-top: 2%;
+    background: rgba(0,0,0,.4);
+}
+#card p.currentshowtitle {
+	color: #yellow;
+
+    text-shadow: 2px 2px #000000;
+	padding-top:3%;
+	padding-bottom: 2%;
+    font-size: 42px;
+    width: 70%;
+    padding-right: 22%;
+    line-height: 1.4;
+    font-weight: bold;
+
+    background: rgba(0,0,0,.4);
+}
+#card p.currentshowtitle span {
+	font-style: italic;
+	font-size: 38px;
+}
+
+#card .datetime {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	font-size: 26px;
+}
+#card .logo {
+	max-width: 18%;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	padding-right: 8%;
+}
 
 #controls {
 	position: absolute;

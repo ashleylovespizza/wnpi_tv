@@ -3,20 +3,13 @@
 <head>
   <title>WNPI</title>
 
-  <script src="http://vjs.zencdn.net/6.2.8/video.js"></script>
-
-  <script src="//cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
-
+  <script src="js/video.js"></script>
+  <script src="js/tweenmax.js"></script>
   <script src="js/moment.js"></script>
-  <script
-  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-  integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
-  crossorigin="anonymous"></script>
-
+  <script src="js/jquery.js"></script>
   <script src="main.js"></script>
 
-  <link href="http://vjs.zencdn.net/6.2.8/video-js.css" rel="stylesheet">
-
+  <link href="videojs.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="main.css"> 
 
 
@@ -35,9 +28,10 @@
       <div id="card">
         <div class="info">
           <h1>CHANNEL <span id="channelnumber"></span></h1>
-          <p>Now showing:</p>
+          <p class="now">Now showing:</p>
           <p class="currentshowtitle"></p>
           <p class="datetime"></p>
+          <img class="logo" src="/images/wnpi_logo.png"/>
         </div>
         <div class="cover"></div>
       </div>

@@ -38,35 +38,43 @@ $(document).ready(function(){
   var videos = [
     { "video": "wallE.mp4",
       "startTime": 0,
-      "cardbg": "channelcard_1.jpg"
+      "cardbg": "channelcard_1.jpg",
+      "showname": "Afternoon Matinee: Wall-E"
     },
     { "video": "killerwhale.mp4",
       "startTime": 0,
-      "cardbg": "channelcard_2.jpg"
+      "cardbg": "channelcard_2.jpg",
+      "showname": "Jean-Michel Cousteau: Ocean Adventures<br><span>Call of the Killer Whale</span>"
     },
     { "video": "sesamestreet.mp4",
       "startTime": 0,
-      "cardbg": "channelcard_3.jpg"
+      "cardbg": "channelcard_3.jpg",
+      "showname": "Sesame Street"
     },  
     { "video": "misterrogers.mp4",
       "startTime": 0,
-      "cardbg": "channelcard_4.jpg"
+      "cardbg": "channelcard_4.jpg",
+      "showname": "Mister Rogers' Neighborhood"
     },
      { "video": "bugsbunny.mp4",
       "startTime": 0,
-      "cardbg": "channelcard_5.jpg"
+      "cardbg": "channelcard_5.jpg",
+      "showname": "Loony Tunes"
     },
      { "video": "flightofdragons.mp4",
       "startTime": 0,
-      "cardbg": "channelcard_6.gif"
+      "cardbg": "channelcard_6.gif",
+      "showname": "WNPI Presents: Flight of Dragons"
     },
      { "video": "startreks01e21.mp4",
       "startTime": 0,
-      "cardbg": "channelcard_7.gif"
+      "cardbg": "channelcard_7.gif",
+      "showname": "Star Trek: The Next Generation <br><span>The Arsenal of Freedom (Season 1, Episode 20)</span>"
     },
     { "video": "columbo_lovelybutlethal.mp4",
       "startTime": 0,
-      "cardbg": "channelcard_8.jpg"
+      "cardbg": "channelcard_8.jpg",
+      "showname": "Columbo: Lovely But Lethal <span>(Season 3)</span>"
     },
   ];
 
@@ -93,7 +101,7 @@ $(document).ready(function(){
 
   // todo - do i need this?
     tvPlayer.on('loadedmetadata', function(e){
-        
+
         console.log("loaded META data!!!!", e)
 
         var currTime = new Date();
@@ -154,8 +162,8 @@ $(document).keyup(function(e) {
 
   function showChannelCard() {
     $("#card").css("background-image", 'url(/images/' + videos[currchannel]['cardbg'] + ')')
-    $("#channelnumber").html(currchannel);
-    $("#card .currentshowtitle").html(videos[currchannel]['video']);
+    $("#channelnumber").html(currchannel+1);
+    $("#card .currentshowtitle").html(videos[currchannel]['showname']);
     $("#card .datetime").html( moment().format('dddd MMMM Do YYYY, h:mm a') )
 
     $("#card").addClass("changechannel");

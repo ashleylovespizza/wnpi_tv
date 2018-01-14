@@ -80,6 +80,7 @@ video, #tv-player, .video-js, .vjs-default-skin
 	position: absolute;
 	z-index: 200;
 	top: 0;
+	display: none;
 	height: 5%;
 	background: blue;
 }

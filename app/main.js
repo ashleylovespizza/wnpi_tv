@@ -1,5 +1,8 @@
 $(document).ready(function(){
 
+
+  var USB_ROOT = "videos/" //"/Volumes/WNPI_SRC/wnpi/"
+
   // TIMELINE
   ///////////////
   var timeline = new TimelineMax({
@@ -27,41 +30,66 @@ $(document).ready(function(){
   var tvPlayer = videojs('tv-player', {
     controls: false,
     autoplay: true,
+    loop: true,
     preload: 'auto'
   });
 
     var videos = [
-    { "video": "videos/hustle.mp4",
+    { "video": "wallE.mp4",
+      "startTime": 0
+    },
+    { "video": "killerwhale.mp4",
       "startTime": 0
     },
 
-    { "video": "videos/birdie.mp4",
-      "startTime": 0
-    },
-    {"video": "videos/fuzzy.mp4", 
-       "startTime": 0
-     }, 
-
-    { "video": "videos/moogf.mp4",
-      "startTime": 0
-    },
-
-     {"video": "videos/affoa.mp4", 
-      "startTime": 0
-    },
-    { "video": "videos/alchemy.mp4",
-      "startTime": 0
-    },
-    { "video": "videos/agile.mp4",
+    { "video": "sesamestreet.mp4",
       "startTime": 0
     },
     
-    { "video": "videos/salt.mp4",
+    { "video": "misterrogers.mp4",
       "startTime": 0
     },
-    { "video": "videos/extras.mp4",
+     { "video": "bugsbunny.mp4",
       "startTime": 0
-    }
+    },
+     { "video": "flightofdragons.mp4",
+      "startTime": 0
+    },
+     { "video": "startreks01e21.mp4",
+      "startTime": 0
+    },
+    { "video": "columbo_lovelybutlethal.mp4",
+      "startTime": 0
+    },
+
+
+    // { "video": "birdie.mp4",
+    //   "startTime": 0
+    // },
+    // {"video": "videos/fuzzy.mp4", 
+    //    "startTime": 0
+    //  }, 
+
+    // { "video": "videos/moogf.mp4",
+    //   "startTime": 0
+    // },
+
+    //  {"video": "videos/affoa.mp4", 
+    //   "startTime": 0
+    // },
+    // { "video": "videos/alchemy.mp4",
+    //   "startTime": 0
+    // },
+    // { "video": "videos/agile.mp4",
+    //   "startTime": 0
+    // },
+    
+    // { "video": "videos/salt.mp4",
+    //   "startTime": 0
+    // },
+    // { "video": "videos/extras.mp4",
+    //   "startTime": 0
+    // }
     ];
 
 
@@ -73,7 +101,7 @@ $(document).ready(function(){
   for (i in videos) {
     videos[i]['startTime'] = channelChangedAt;
   }
-  tvPlayer.src(videos[currchannel]['video']);
+  tvPlayer.src(USB_ROOT + videos[currchannel]['video']);
 
 
 
@@ -87,17 +115,40 @@ $(document).ready(function(){
     var diffSeconds = (timeDiff / (1000));
     channelChangedAt = currTime;
 
-    console.log("now play "+videos[currchannel]['video'])
+    console.log("now play "+USB_ROOT + videos[currchannel]['video'])
 
-    tvPlayer.src(videos[currchannel]['video']);
+    tvPlayer.src(USB_ROOT + videos[currchannel]['video']);
     var newtime = diffSeconds
     console.log("play at "+newtime);
+
    
     tvPlayer.on('loadedmetadata', function() {
       tvPlayer.currentTime(newtime);
       setTimeout(function() {
         $("#static").removeClass("changechannel");
       }, 300);
+
+      var tvW = tvPlayer.videoWidth();
+      var tvH = tvPlayer.videoHeight();
+
+      var browserW = $("#video-container").width()
+      var browserH = $("#video-container").height()
+
+    //console.log("video W: " + tvPlayer.videoWidth() + ", browser width: "+$("#video-container").width())
+    //console.log("video H: " + tvPlayer.videoHeight() + ", browser width: "+$("#video-container").height())
+
+    console.log("video ratio is "+ Number(tvH/tvW) )
+    console.log("browser ratio is "+ Number(browserH/browserW));
+
+    // if video ratio > browser ratio, taller than wide (space on left/right)
+    // else , wider than tall (space on top/bottom)
+      if ( (tvH/tvW) > (browserH/browserW) ) {
+        // taller than wide, space on left/right
+
+        // stretch video
+      } else {
+        //  wider than tall (space on top/bottom)
+      }
     });
 
 
@@ -105,22 +156,44 @@ $(document).ready(function(){
   }
 
 
-  $("#up").click(function(){
-    $("#static").addClass("changechannel");
-    currchannel++;
-    currchannel = currchannel % videos.length;
-    updateChannel();
-  })
+$(document).keyup(function(e) {
+  var code = e.keyCode || e.which;
+   if(code == 38) { //Enter keycode
+    //alert("up")
+    changeChannel('up');
+   }
+   if(code == 40) { //Enter keycode
+     //alert("DOWN")
+    changeChannel('down');
+   }
+});
 
+  $("#up").click(function(){
+    changeChannel('up');
+  })
 
   $("#down").click(function(){
-    $("#static").addClass("changechannel");
-
-    currchannel--;
-    currchannel = (currchannel < 0) ? videos.length-1 : currchannel;
-    currchannel = currchannel % videos.length;
-    updateChannel();
+    changeChannel('down');
   })
+
+
+  function changeChannel(direction){
+    if (direction == "up") {
+       $("#static").addClass("changechannel");
+      currchannel++;
+      currchannel = currchannel % videos.length;
+      updateChannel();
+    }
+    else if (direction == "down") {
+        $("#static").addClass("changechannel");
+
+      currchannel--;
+      currchannel = (currchannel < 0) ? videos.length-1 : currchannel;
+      currchannel = currchannel % videos.length;
+      updateChannel();
+    }
+  }
+
 
 
   // POWER ON OFF

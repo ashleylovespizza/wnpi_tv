@@ -2,7 +2,7 @@ body {
 	background: #111;
 	font-family: sans-serif;
 }
-/** {cursor: none;}*/
+* {cursor: none;}
 
 
 /* josefin-sans-regular - latin */
@@ -145,7 +145,7 @@ video, #tv-player, .video-js, .vjs-default-skin
 #card .info {
 	position: absolute;
 	z-index: 50;
-	top: 5%;
+	top: 4%;
 	left: 0;
 	right: 0;
 	bottom: 8%;
@@ -170,7 +170,7 @@ video, #tv-player, .video-js, .vjs-default-skin
 	font-style:italic;
     margin-top: 4%;
     font-size: 20px;
-    padding-top: 4%;
+    padding-top: 3%;
     background: rgba(0,0,0,.4);
 }
 #card p.currentshowtitle {

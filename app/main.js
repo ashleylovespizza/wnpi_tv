@@ -59,7 +59,7 @@ $(document).ready(function(){
      { "video": "bugsbunny.mp4",
       "startTime": 0,
       "cardbg": "channelcard_5.jpg",
-      "showname": "Loony Tunes"
+      "showname": "Looney Tunes"
     },
      { "video": "flightofdragons.mp4",
       "startTime": 0,
@@ -122,7 +122,7 @@ $(document).ready(function(){
       tvPlayer.play(); 
         console.log("loaded data!!!!", e)
 
-       // $("#card").removeClass("changechannel");
+       $("#card").removeClass("changechannel");
 
     })
 

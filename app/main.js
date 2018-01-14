@@ -103,6 +103,12 @@ $(document).ready(function(){
   }
   tvPlayer.src(USB_ROOT + videos[currchannel]['video']);
 
+  tvPlayer.on('loadedmetadata', function() {
+      tvPlayer.currentTime(0);
+      setTimeout(function() {
+        $("#static").removeClass("changechannel");
+      }, 300);
+  });
 
 
   // CHANNEL SWITCHING
@@ -128,11 +134,11 @@ $(document).ready(function(){
         $("#static").removeClass("changechannel");
       }, 300);
 
-      var tvW = tvPlayer.videoWidth();
-      var tvH = tvPlayer.videoHeight();
+      // var tvW = tvPlayer.videoWidth();
+      // var tvH = tvPlayer.videoHeight();
 
-      var browserW = $("#video-container").width()
-      var browserH = $("#video-container").height()
+      // var browserW = $("#video-container").width()
+      // var browserH = $("#video-container").height()
 
     //console.log("video W: " + tvPlayer.videoWidth() + ", browser width: "+$("#video-container").width())
     //console.log("video H: " + tvPlayer.videoHeight() + ", browser width: "+$("#video-container").height())
@@ -142,13 +148,13 @@ $(document).ready(function(){
 
     // if video ratio > browser ratio, taller than wide (space on left/right)
     // else , wider than tall (space on top/bottom)
-      if ( (tvH/tvW) > (browserH/browserW) ) {
-        // taller than wide, space on left/right
+      // if ( (tvH/tvW) > (browserH/browserW) ) {
+      //   // taller than wide, space on left/right
 
-        // stretch video
-      } else {
-        //  wider than tall (space on top/bottom)
-      }
+      //   // stretch video
+      // } else {
+      //   //  wider than tall (space on top/bottom)
+      // }
     });
 
 

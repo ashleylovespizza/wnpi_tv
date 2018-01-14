@@ -29,7 +29,7 @@ $(document).ready(function(){
 
   var tvPlayer = videojs('tv-player', {
     controls: false,
-    autoplay: true,
+    autoplay: false,
     loop: true,
     preload: 'auto'
   });

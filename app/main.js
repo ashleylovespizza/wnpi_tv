@@ -134,11 +134,15 @@ $(document).ready(function(){
 
 
       tvPlayer.currentTime(newtime);
+
+        console.log("SET::  "+tvPlayer.currentTime())
+       tvPlayer.play();
+        console.log("actually playing at:  "+tvPlayer.currentTime())
+
       setTimeout(function() {
         $("#static").removeClass("changechannel");
-        tvPlayer.play();
 
-        console.log("actually playing at:  "+tvPlayer.currentTime())
+
 
       }, 300);
 

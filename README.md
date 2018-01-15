@@ -2,6 +2,10 @@
 homemade custom programmed TV for charlie and me
 
 
+# raspi backup sd card:
+sudo dd bs=4M if=/dev/rdisk4 of=~/Desktop/wnpi_raspi_bak.img
+
+
 # to run
 server (on port 3000): `forever -w server.js `
 client (on port 8080): `cd app && npm run dev`

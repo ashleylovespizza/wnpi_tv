@@ -36,7 +36,7 @@ $(document).ready(function(){
   window.tvPlayer = tvPlayer;
 
   var videos = [
-    { "video": "wallE.mp4",
+    { "video": "commercialtest.mp4",
       "startTime": 0,
       "cardbg": "channelcard_1.jpg",
       "showname": "Afternoon Matinee: Wall-E"
@@ -83,7 +83,7 @@ $(document).ready(function(){
   // start out with it turned on
   var currchannel = 0;
   var channelChangedAt = new Date();
-  // INITIALLY set all starttimes to be when you turned it on (/loaded)
+  // INITIALLY set all starttimes to be timestamp when you turned it on (/loaded)
   for (i in videos) {
     videos[i]['startTime'] = channelChangedAt;
   }
@@ -106,13 +106,19 @@ $(document).ready(function(){
 
         var currTime = new Date();
         var timeDiff = Math.abs(currTime.getTime() - videos[currchannel]['startTime'].getTime());
+        // NOTE: currently overkill to have every clip / channel track its own starttime
+
         var diffSeconds = (timeDiff / (1000));
         channelChangedAt = currTime;
 
-        var newtime = diffSeconds
+        var newtime;
+        // if time passing since beginning is longer than entire clip length
+        if (diffSeconds > tvPlayer.duration()) {
+          newtime = diffSeconds % tvPlayer.duration();
+        } else {
+          newtime = diffSeconds
+        }
         console.log("play at "+newtime);
-
-        // TODO - duration mod with curr time for looping time
 
         tvPlayer.currentTime(newtime);
         tvPlayer.play(); 

@@ -36,7 +36,7 @@ $(document).ready(function(){
   window.tvPlayer = tvPlayer;
 
   var videos = [
-    { "video": "commercialtest.mp4",
+    { "video": "stallman.mkv",
       "startTime": 0,
       "cardbg": "channelcard_1.jpg",
       "showname": "Afternoon Matinee: Wall-E"

@@ -10,8 +10,8 @@
 var moment = require('moment');
 var getDuration = require('get-video-duration');
 
-var SPREADSHEET_ID = '1GWwkK9Phqy_kOh35o0MD36Ba97p9zW_YHf8oWEcCDl0';
-var SRC_LOCATION = "/Volumes/WNPI_SRC/wnpi/";
+//var SPREADSHEET_ID = '1GWwkK9Phqy_kOh35o0MD36Ba97p9zW_YHf8oWEcCDl0';
+//var SRC_LOCATION = "/Volumes/WNPI_SRC/wnpi/";
 
 
 
@@ -113,16 +113,16 @@ module.exports = class TvGuide {
 
     init() {
 
-        require('./spreadsheetReader.js')
-        .then(function(results){
-            //console.log("THEN!!!")
-            instance.channels = results;
-            //console.log('channels:', channels);
-            instance.createTvGuide();
-        })
-        .catch(function(err){ 
-            //console.log("ERRAR", err); 
-        });
+        // require('./spreadsheetReader.js')
+        // .then(function(results){
+        //     //console.log("THEN!!!")
+        //     instance.channels = results;
+        //     //console.log('channels:', channels);
+        //     instance.createTvGuide();
+        // })
+        // .catch(function(err){ 
+        //     //console.log("ERRAR", err); 
+        // });
 
     }
 

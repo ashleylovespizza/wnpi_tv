@@ -5,6 +5,9 @@ homemade custom programmed TV for charlie and me
 # raspi backup sd card:
 sudo dd bs=4M if=/dev/rdisk4 of=~/Desktop/wnpi_raspi_bak.img
 
+# raspi pw
+`a new tv for our baby`
+
 
 # to run
 server (on port 3000): `forever -w server.js `

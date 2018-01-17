@@ -35,12 +35,12 @@ router.route('/tvguide')
 				 	{ filename: 'flightofdragons.mp4',
 				 	 showname: 'Flight of Dragons'
 				 	},
-				 	{ filename: 'wallE.mp4',
-				 	 showname: 'Wall-E'
-				 	},
-				 	{ filename: 'LIGHT YEARS (aka Gandahar).mp4',
-				 	 showname: 'Gandahar'
-				 	}
+				 	// { filename: 'wallE.mp4',
+				 	//  showname: 'Wall-E'
+				 	// },
+				 	// { filename: 'LIGHT YEARS (aka Gandahar).mp4',
+				 	//  showname: 'Gandahar'
+				 	// }
 				 ]
 				},
 				{channel: 2,
@@ -49,8 +49,8 @@ router.route('/tvguide')
 				 	{ filename: 'commercialtest.mp4',
 				 	 showname: 'a weird german atari commercial'
 				 	},
-				 	{ filename: 'bugsbunny.mp4',
-				 	 showname: 'Bugs Bunny: Robot Rabbit'
+				 	{ filename: 'jewels.mp4',
+				 	 showname: 'Beautiful JEWELES'
 				 	}
 				 ]
 				},

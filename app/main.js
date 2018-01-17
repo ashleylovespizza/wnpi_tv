@@ -49,7 +49,7 @@ $(document).ready(function(){
      // console.log(channel_data)
       // start out with it turned on, first channel
       currchannel = 0;
-
+      var turnedOnAt = new Date();
       // make initial channel_data object
       for (i in channel_data) {
         // select the first show to start with
@@ -57,14 +57,9 @@ $(document).ready(function(){
         // keep track of which show in channel.shows is currently playing 
         // assuming all channels have at least one show, this initial setup should always work
         current_state_for_this_channel['show_i'] = 0;
+        current_state_for_this_channel['startTime'] = turnedOnAt;
 
         current_state.push( current_state_for_this_channel )
-      }
-
-      // INITIALLY set all starttimes to be timestamp when you turned it on (/loaded)
-      var turnedOnAt = new Date();
-      for (i in current_state) {
-        current_state[i]['startTime'] = turnedOnAt;
       }
 
       console.log("------");
@@ -97,7 +92,11 @@ $(document).ready(function(){
     // videojs content listeners
 
     // TODO - event listener for when video completes while you're on that channel
+    tvPlayer.on('ended', function(e) {
+      // current 'show' ended
 
+      playNextShowOnChannel();
+    })
 
     tvPlayer.on('loadedmetadata', function(e){
 
@@ -112,7 +111,7 @@ $(document).ready(function(){
         channelChangedAt = currTime;
 
         var newtime;
-
+   //     debugger;
         // if time passing since beginning is longer than entire "show" length
         if (diffSeconds > tvPlayer.duration()) {
           playNextShowOnChannel();
@@ -161,20 +160,38 @@ $(document).ready(function(){
   }
 
   function playNextShowOnChannel() {
-     // find out next show
-          console.log("Now playing: show # "+current_state[i]['show_i']);
-          console.log(" out of a total possible " + (channel_data[i]['shows']).length)
+    var newStartTime = new Date();
+    // find out next show
 
-          var curr_show_i = current_state[i]['show_i'];
-          curr_show_i++;
-          if (curr_show_i >= (channel_data[i]['shows']).length) { curr_show_i = 0; }
+    var curr_show_i = current_state[currchannel]['show_i'];
 
-          // then, jump to where you need to be in that show
+    console.log("Now playing: show # "+current_state[currchannel]['show_i']);
+    console.log(" out of a total possible " + (channel_data[currchannel]['shows']).length)
 
 
-          // OLD: repeat show, jump ahead by modding...
-          //          newtime = diffSeconds % tvPlayer.duration();
-          
+    console.log("---------- before, curr show i is: "+curr_show_i)
+    curr_show_i++;
+    if (curr_show_i >= (channel_data[currchannel]['shows']).length) { curr_show_i = 0; }
+ //   debugger;
+
+    console.log("curr show i is NOW: "+curr_show_i)
+
+    // set correct starttime...
+    // FOR NOW, just start the new file right now, ok man?
+    var new_current_state_for_this_channel = channel_data[currchannel]['shows'][curr_show_i];
+    // keep track of which show in channel.shows is currently playing 
+    // assuming all channels have at least one show, this initial setup should always work
+    new_current_state_for_this_channel['show_i'] = curr_show_i;
+    new_current_state_for_this_channel['startTime'] = newStartTime;
+ //   debugger;
+
+    // update current state for this channel
+    current_state[currchannel] = new_current_state_for_this_channel;
+
+    console.log("STATE IS NOW:::::::::::")
+    console.log(current_state[currchannel])
+    // load src
+    updateChannel();
   }
 
 
@@ -182,7 +199,7 @@ $(document).ready(function(){
   /////////////////////
   function updateChannel(){
 
-    console.log("now play "+USB_ROOT + current_state[currchannel]['filename'])
+    console.log("now play "+USB_ROOT + (currchannel+1) + '/' + current_state[currchannel]['filename'])
     tvPlayer.pause();
     tvPlayer.src(USB_ROOT + (currchannel+1) + '/' + current_state[currchannel]['filename']);
   }

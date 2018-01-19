@@ -72,6 +72,6 @@ router.route('/tvguide')
 				 ]
 				}
 			]}
-		res.json( foo  );
+		res.json( tvguide  );
 	});
 app.use('/', router);

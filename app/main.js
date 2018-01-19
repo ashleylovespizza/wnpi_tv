@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+// relative roots
   var USB_ROOT = "videos/" //"/Volumes/WNPI_SRC/wnpi/"
   var CARDIMAGES_ROOT = "videos/cardimages/";
   var MIN_CARD_TIME = 1200;
@@ -34,7 +35,7 @@ $(document).ready(function(){
   // track your current channel globally  
   var currchannel;
   
-  $.getJSON( "http://localhost:3000/tvguide", function( data ) {
+  $.getJSON( "http://wnpi.local:3000/tvguide", function( data ) {
     var channels = data.guide;
     //console.log(channels)
     $.each( channels, function( key, val ) {

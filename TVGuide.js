@@ -9,7 +9,6 @@
 */
 var moment = require('moment');
 //  var getDuration = require('get-video-duration');
-var ffmpeg = require('fluent-ffmpeg');
  
  
 var fs = require('fs'),
@@ -19,7 +18,7 @@ var fs = require('fs'),
 
 //var SPREADSHEET_ID = '1GWwkK9Phqy_kOh35o0MD36Ba97p9zW_YHf8oWEcCDl0';
 var SRC_LOCATION = "/media/pi/WNPI_SRC/wnpi";
-
+//var SRC_LOCATION = "/Users/aholtgraver/Projects/personal/wnpi/wnpi_tv/app/videos"
 
 
 let instance = null;
@@ -40,7 +39,7 @@ module.exports = class TvGuide {
     
 
     dirTree(filename) {
-      //  console.log("working: "+filename)
+        console.log("working: "+filename)
 
         var stats = fs.lstatSync(filename);
         var info = {};
@@ -77,6 +76,8 @@ module.exports = class TvGuide {
 
        // start at first 'content' listing, go until next (wrapping around if necessary)
         var tvguide = instance.dirTree(SRC_LOCATION);
+        console.log("wtf");
+        console.log(tvguide)
       
         for ( var i=0; i<tvguide.guide.length; i++) {
 

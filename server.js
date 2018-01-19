@@ -19,14 +19,16 @@ app.listen(app.get('port'), function() {
 
 var TVGuide = require('./TVGuide.js');
 var my_guide = new TVGuide();
-my_guide.init();
+
 var router = express.Router();
 // router.get('/', function(req, res) {
 //     res.json({ message: 'hooray! welcome to our api!' });   
 // });
 router.route('/tvguide')
 	.get(function(req, res) {
-		//foo = my_guide.createTvGuide();
+		var tvguide = my_guide.createTvGuide();
+		console.log("oy");
+		console.log(tvguide);
 		var foo = { 
 			guide: [
 				{channel: 1,

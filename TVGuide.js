@@ -8,10 +8,17 @@
 *
 */
 var moment = require('moment');
-var getDuration = require('get-video-duration');
+//  var getDuration = require('get-video-duration');
+var ffmpeg = require('fluent-ffmpeg');
+ 
+ 
+var fs = require('fs'),
+    path = require('path');
+ 
+
 
 //var SPREADSHEET_ID = '1GWwkK9Phqy_kOh35o0MD36Ba97p9zW_YHf8oWEcCDl0';
-//var SRC_LOCATION = "/Volumes/WNPI_SRC/wnpi/";
+var SRC_LOCATION = "/media/pi/WNPI_SRC/wnpi";
 
 
 
@@ -31,6 +38,106 @@ module.exports = class TvGuide {
         return instance;
     }
     
+
+    dirTree(filename) {
+      //  console.log("working: "+filename)
+
+        var stats = fs.lstatSync(filename);
+        var info = {};
+
+        if ( (path.basename(filename) == 'wnpi') && stats.isDirectory()) {
+            // filename is root directory, make guide root and don't worry about any other info
+           
+            info.guide = fs.readdirSync(filename).map(function(child) {
+                return instance.dirTree(filename + '/' + child);
+            });
+
+        } else if (!isNaN(parseInt(path.basename(filename))) && stats.isDirectory() ) {
+            // foldername is an integer
+            info.channel = parseInt(path.basename(filename));
+            info.cardbg = 'channelcard_' + path.basename(filename) + '.jpg';
+            info.shows = fs.readdirSync(filename).map(function(child) {
+                return instance.dirTree(filename + '/' + child);
+            });
+
+        } else if ( !stats.isDirectory() 
+                    && (path.basename(filename)).substring(0,2) != '._' 
+                    && (/\.(mov|mp4)$/i).test(path.basename(filename))) {
+            // mp4/mov file!
+         
+            info.filename = path.basename(filename);
+        }
+        return info;
+    }
+ 
+
+
+    createTvGuide() {
+       var currFolder = SRC_LOCATION;
+
+       // start at first 'content' listing, go until next (wrapping around if necessary)
+        var tvguide = instance.dirTree(SRC_LOCATION);
+      
+        for ( var i=0; i<tvguide.guide.length; i++) {
+
+            for( var j=tvguide.guide[i].shows.length-1; j>-1; j--) {
+
+                var isEmptyObj = (Object.keys(tvguide.guide[i].shows[j]).length === 0 && tvguide.guide[i].shows[j].constructor === Object)
+                //console.log(tvguide.guide[i].shows[j] + " is "+isEmptyObj)
+               
+                // if ( i==4) {
+                //     console.log(tvguide.guide[i].shows);
+                //     console.log(j, isEmptyObj)
+                // }
+
+                if (isEmptyObj) {
+                    // keep track of js that shall be deleted
+                    // delete from shows
+                    tvguide.guide[i].shows.splice(j, 1);
+                    
+                }
+            }
+        }
+
+        return tvguide;
+
+        // FOLDERS[folderName] = [];
+
+        // if (FOLDERS[folderName].length == 0) {
+        //   var files = fs.readdirSync(folderName);
+        //   for (f in files) {
+        //     if ( (/\.(avi|mov|mkv|mp4)$/i).test(files[f])) {
+        //       FOLDERS[folderName].push(files[f])
+        //     }
+
+        //   }
+
+        // }
+    }
+
+   
+
+
+/*******
+old format when I was using spreadsheet reader
+
+
+ init() {
+
+
+       // instance.createTvGuide();
+        // require('./spreadsheetReader.js')
+        // .then(function(results){
+        //     //console.log("THEN!!!")
+        //     instance.channels = results;
+        //     //console.log('channels:', channels);
+        //     instance.createTvGuide();
+        // })
+        // .catch(function(err){ 
+        //     //console.log("ERRAR", err); 
+        // });
+
+    }
 
     createTvGuide() {
         console.log('create tv guide');
@@ -111,19 +218,6 @@ module.exports = class TvGuide {
         
     }
 
-    init() {
-
-        // require('./spreadsheetReader.js')
-        // .then(function(results){
-        //     //console.log("THEN!!!")
-        //     instance.channels = results;
-        //     //console.log('channels:', channels);
-        //     instance.createTvGuide();
-        // })
-        // .catch(function(err){ 
-        //     //console.log("ERRAR", err); 
-        // });
-
-    }
-
+    *********/
 }
+

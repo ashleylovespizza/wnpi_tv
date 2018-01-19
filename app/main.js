@@ -53,14 +53,17 @@ $(document).ready(function(){
       var turnedOnAt = new Date();
       // make initial channel_data object
       for (i in channel_data) {
-        // select the first show to start with
-        var current_state_for_this_channel = channel_data[i]['shows'][0];
-        // keep track of which show in channel.shows is currently playing 
-        // assuming all channels have at least one show, this initial setup should always work
-        current_state_for_this_channel['show_i'] = 0;
-        current_state_for_this_channel['startTime'] = turnedOnAt;
+        if (channel_data[i]['shows'].length > 0) {
+          // select the first show to start with
+          var current_state_for_this_channel = channel_data[i]['shows'][0];
+          // keep track of which show in channel.shows is currently playing 
+          // assuming all channels have at least one show, this initial setup should always work
+          current_state_for_this_channel['show_i'] = 0;
+          current_state_for_this_channel['startTime'] = turnedOnAt;
 
-        current_state.push( current_state_for_this_channel )
+          current_state.push( current_state_for_this_channel )
+        }
+       
       }
 
       console.log("------");
@@ -210,7 +213,7 @@ $(document).ready(function(){
     console.log(CARDIMAGES_ROOT + channel_data[currchannel]['cardbg'])
     $("#card").css("background-image", 'url(' + CARDIMAGES_ROOT + channel_data[currchannel]['cardbg'] + ')')
     $("#channelnumber").html(currchannel+1);
-    $("#card .currentshowtitle").html(current_state[currchannel]['showname']);
+    $("#card .currentshowtitle").html(current_state[currchannel]['filename']);
     $("#card .datetime").html( moment().format('dddd MMMM Do, h:mm a') )
 
     $("#card").addClass("changechannel");

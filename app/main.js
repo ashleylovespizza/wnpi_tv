@@ -2,7 +2,7 @@ $(document).ready(function(){
 
 // relative roots
   var USB_ROOT = "videos/" //"/Volumes/WNPI_SRC/wnpi/"
-  var CARDIMAGES_ROOT = "videos/cardimages/";
+  var CARDIMAGES_ROOT = "cardimages/";
   var MIN_CARD_TIME = 1200;
 
   var lastChannelChange = new Date();

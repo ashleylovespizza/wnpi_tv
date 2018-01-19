@@ -9,9 +9,11 @@ sudo dd bs=4M if=/dev/rdisk4 of=~/Desktop/wnpi_raspi_bak.img
 `a new tv for our baby`
 
 
+
 # to run
+`cd /home/pi/wnpi/wnpi_tv`
 server (on port 3000): `forever -w server.js `
-client (on port 8080): `cd app && npm run dev`
+client (on port 5000): `cd app && server -p 5000`
 
 
 # idea is

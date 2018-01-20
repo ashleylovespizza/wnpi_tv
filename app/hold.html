@@ -13,9 +13,12 @@ var startTime = startDate.getTime(),
 
 function testTime() {
 	if (nowTime > startTime) {
-
-		request(serverURL);
-		request(clientURL);
+		setTimeout(function(){
+			//request(serverURL);
+			//request(clientURL);
+			window.location.href = clientURL;
+		}, 15000)
+		
 	} else {
 		// test every minute
 		setTimeout(testTime, 60000)

@@ -5,6 +5,11 @@ homemade custom programmed TV for charlie and me
 # raspi backup sd card:
 sudo dd bs=4M if=/dev/rdisk4 of=~/Desktop/wnpi_raspi_bak.img
 
+
+# install on raspi
+sudo npm install -g http-server
+
+
 # raspi pw
 `a new tv for our baby`
 
@@ -16,7 +21,22 @@ sudo dd bs=4M if=/dev/rdisk4 of=~/Desktop/wnpi_raspi_bak.img
 
 
 # autoboot stuff
-- in /etc/xdg/lxsession/LXDE-pi/autostart...
+- in 	
+USE: https://dougbatton.blogspot.com/2016/08/raspberry-pi-3-jessie-auto-start.html
+@lxpanel --profile LXDE-pi
+@pcmanfm --desktop --profile LXDE-pi
+#@xscreensaver -no-splash
+@point-rpi
+@xset s off
+@xset -dpms
+@xset noblank
+
+@sh /home/pi/wnpi/wnpi_tv/startwnpiservers.sh
+@sed -i 's/"exited_cleanly": false/"exited_cleanly": true/' ~/.config/chromium/Default/Preferences
+@chromium-browser --noerrdialogs --kiosk file:///home/pi/wnpi_wnpi_tv/app/hold.html --incognito
+
+
+
 
 # to run
 `cd /home/pi/wnpi/wnpi_tv`

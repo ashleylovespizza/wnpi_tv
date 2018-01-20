@@ -8,7 +8,15 @@ sudo dd bs=4M if=/dev/rdisk4 of=~/Desktop/wnpi_raspi_bak.img
 # raspi pw
 `a new tv for our baby`
 
+#TODO!
+- bg script to check folders for avi / mkv files and convert to mp4 where possible
+- auto start on raspi boot
+- auto reboot
+- 
 
+
+# autoboot stuff
+- in /etc/xdg/lxsession/LXDE-pi/autostart...
 
 # to run
 `cd /home/pi/wnpi/wnpi_tv`

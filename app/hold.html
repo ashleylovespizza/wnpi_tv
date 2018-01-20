@@ -1,31 +1,63 @@
 <html>
 <head>
 <script type="text/javascript">
-setInterval(function(){
-  if ( checkUrl('http://localhost:3000/tvguide') && checkUrl('http://localhost:5001')) {
-    window.location.href = 'http://localhost:5001';
+
+var clientURL = 'http://localhost:5001';
+var serverURL = 'http://localhost:3000/tvguide';
+
+
+var startDate= new Date(2010, 12, 21, 5, 00, 0, 0), // today 5am
+    nowDate = new Date();
+var startTime = startDate.getTime(),
+    nowTime = nowDate.getTime();
+
+function testTime() {
+	if (nowTime > startTime) {
+
+		request(serverURL);
+		request(clientURL);
+	} else {
+		// test every minute
+		setTimeout(testTime, 60000)
+	}
+}
+testTime();
+
+var bothserversup = -2;
+
+function request(url) {
+  const xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function(e) {
+    if (xhr.readyState === 4) {
+
+      if (xhr.status === 200) {
+        bothserversup++;
+
+        if (bothserversup == 0) {
+            // gotoclient
+            window.location.href = clientURL;
+        }
+      } else {
+        setTimeout(function(){
+            request(url)
+        }, 3000);
+      }
+    }
   }
-}, 3000);
-	    
-function checkUrl(url) {
-        var request = false;
-        if (window.XMLHttpRequest) {
-                request = new XMLHttpRequest;
-        } else if (window.ActiveXObject) {
-                request = new ActiveXObject("Microsoft.XMLHttp");
-        }
-
-        if (request) {
-                request.open("GET", url);
-                if (request.status == 200) { return true; }
-        }
-
-        return false;
+  xhr.open('GET', url)
+  xhr.send();
 }
 
 
 </script>
+<style>
+	body {
+		background: #000 url('./cardimages/testpattern.png') center center;
+		background-size: cover;
+	}
+</style>
 </head>
 <body>
+	
 </body>
 </html>

@@ -1,0 +1,31 @@
+<html>
+<head>
+<script type="text/javascript">
+setInterval(function(){
+  if ( checkUrl('http://localhost:3000/tvguide') && checkUrl('http://localhost:5001')) {
+    window.location.href = 'http://localhost:5001';
+  }
+}, 3000);
+	    
+function checkUrl(url) {
+        var request = false;
+        if (window.XMLHttpRequest) {
+                request = new XMLHttpRequest;
+        } else if (window.ActiveXObject) {
+                request = new ActiveXObject("Microsoft.XMLHttp");
+        }
+
+        if (request) {
+                request.open("GET", url);
+                if (request.status == 200) { return true; }
+        }
+
+        return false;
+}
+
+
+</script>
+</head>
+<body>
+</body>
+</html>

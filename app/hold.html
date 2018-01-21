@@ -3,7 +3,7 @@
 <script type="text/javascript">
 
 var clientURL = 'http://localhost:5001';
-var serverURL = 'http://localhost:3000/tvguide';
+//var serverURL = 'http://localhost:3000/tvguide';
 
 
 var startDate= new Date(2010, 12, 21, 5, 00, 0, 0), // today 5am
@@ -14,10 +14,8 @@ var startTime = startDate.getTime(),
 function testTime() {
 	if (nowTime > startTime) {
 		setTimeout(function(){
-			//request(serverURL);
-			//request(clientURL);
 			window.location.href = clientURL;
-		}, 15000)
+		}, 30000)
 		
 	} else {
 		// test every minute
@@ -25,31 +23,6 @@ function testTime() {
 	}
 }
 testTime();
-
-var bothserversup = -2;
-
-function request(url) {
-  const xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function(e) {
-    if (xhr.readyState === 4) {
-
-      if (xhr.status === 200) {
-        bothserversup++;
-
-        if (bothserversup == 0) {
-            // gotoclient
-            window.location.href = clientURL;
-        }
-      } else {
-        setTimeout(function(){
-            request(url)
-        }, 3000);
-      }
-    }
-  }
-  xhr.open('GET', url)
-  xhr.send();
-}
 
 
 </script>

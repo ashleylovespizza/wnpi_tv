@@ -23,7 +23,7 @@ $(document).ready(function(){
   //     "startTime": 0,
   //     "cardbg": "channelcard_1.jpg",
   //     "showname": "Afternoon Matinee: Wall-E"
-  //   }
+  //   }....
   // ];
 
   // this is data brought over from JSON - all channels with all possible filenames
@@ -35,7 +35,7 @@ $(document).ready(function(){
   // track your current channel globally  
   var currchannel;
   
-  $.getJSON( "http://wnpi.local:3000/tvguide", function( data ) {
+  $.getJSON( "http://localhost:3000/tvguide", function( data ) {
     var channels = data.guide;
     //console.log(channels)
     $.each( channels, function( key, val ) {
@@ -73,7 +73,13 @@ $(document).ready(function(){
  
       // initialize key listeners
       // TODO - debounce for remote
-      $(document).keyup(function(e) {
+
+      /*
+      var myEfficientFn = debounce(function() {
+  // All the taxing stuff you do
+}, 250); */
+
+      var keyTester = debounce(function(e) {
         var code = e.keyCode || e.which;
          if(code == 38) { //Enter keycode
           //alert("up")
@@ -83,7 +89,12 @@ $(document).ready(function(){
            //alert("DOWN")
           changeChannel('down');
          }
-      });
+      }, 300);
+
+      window.addEventListener('keyup', keyTester);
+      // $(document).keyup(function(e) {
+        
+      // });
 
         $("#up").click(function(){
           changeChannel('up');

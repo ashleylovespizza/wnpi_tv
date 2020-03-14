@@ -5,23 +5,23 @@ $(document).ready(function(){
     var video, videoTexture,videoMaterial;
     var composer;
     var shaderTime = 0;
-    var badTVParams, badTVPass;   
-    var staticParams, staticPass;   
-    var rgbParams, rgbPass; 
-    var filmParams, filmPass; 
+    var badTVParams, badTVPass;
+    var staticParams, staticPass;
+    var rgbParams, rgbPass;
+    var filmParams, filmPass;
     var renderPass, copyPass;
     var gui;
     var pnoise, globalParams;
 
 
     var videos = [
-      {"video": "/videos/fpop/ANNSTEEL.mp4", 
+      {"video": "/videos/1/hudsonpark.mp4",
        "startTime": 0
-     }, 
-     {"video": "/videos/ideo/A.Fistful.of.Dollars.1964.1080p.Bluray.x264.anoXmous_.mp4", 
+     },
+     {"video": "/videos/2/xmaskillkeytar_freezepop_show.mp4",
       "startTime": 0
     },
-    { "video": "/videos/prince/Evil.Dead.II.1987.1080p.BRrip.x264.GAZ.mp4",
+    { "video": "/videos/3/leysin.mp4",
       "startTime": 0}
 
     ];
@@ -141,7 +141,7 @@ $(document).ready(function(){
       };
 
       gui = new dat.GUI();
-      
+
       gui.add(badTVParams, 'mute').onChange(onToggleMute);
 
       var f1 = gui.addFolder('Bad TV');
@@ -235,10 +235,10 @@ $(document).ready(function(){
     function onToggleShaders(){
 
       //Add Shader Passes to Composer
-      //order is important 
+      //order is important
       composer = new THREE.EffectComposer( renderer);
       composer.addPass( renderPass );
-      
+
       if (filmParams.show){
         composer.addPass( filmPass );
       }
@@ -302,7 +302,7 @@ $(document).ready(function(){
 
     console.log("now play "+videos[currchannel]['video'])
 
-   /// tvPlayer.src(videos[currchannel]['video']); 
+   /// tvPlayer.src(videos[currchannel]['video']);
    video.pause();
       video.src = videos[currchannel]['video'];
       video.load();
@@ -328,7 +328,7 @@ $(document).ready(function(){
 
     // tvPlayer.on('loadedmetadata', function() {
     //   tvPlayer.currentTime(newtime);
-    
+
     // });
 
 
@@ -359,7 +359,7 @@ $(document).ready(function(){
   var onofftimeline = new TimelineMax({
     paused: true
   });
-  
+
   onofftimeline
   .to($("#video-container"), .2, {
     width: '100vw',
@@ -397,7 +397,7 @@ $(document).ready(function(){
     }
 
   })
-  
+
 
 
 })

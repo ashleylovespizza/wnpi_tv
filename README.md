@@ -4,7 +4,7 @@ homemade custom programmed TV for charlie and me
 
 # to run
 server (on port 3000): `forever -w server.js `
-client (on port 8080): `cd app && npm run dev`
+client (on port 8080): `cd app && serve -p 8080`
 
 
 # idea is

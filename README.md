@@ -11,13 +11,29 @@ sudo npm install -g http-server
 
 
 # raspi pw
-`a new tv for our baby`
+`a tv for george`
 
-#TODO!
-- bg script to check folders for avi / mkv files and convert to mp4 where possible
+# General TODO -
+- get a raspberry pi
+- get a screen
+- get a working remote and flirrccc thing (downstairs?)
+- get content
+- set up shit
+- "start button"
+- set 30 minute timer
+- set up better title cards
+
+- currently - you must delete .DS_Store crap on your own / in a separate rspbi process
+
+# Raspbi specific -
+- set up symlink from webserver folder to USB video folder root... ?????
 - auto start on raspi boot
 - auto reboot
-- 
+- fullscreen / YOU CAN'T GET OUT OF IT
+
+
+- bg script to check folders for avi / mov / mkv files and convert to mp4 where possible
+
 
 
 # autoboot stuff
@@ -37,11 +53,10 @@ USE: https://dougbatton.blogspot.com/2016/08/raspberry-pi-3-jessie-auto-start.ht
 
 
 
-
 # to run
 `cd /home/pi/wnpi/wnpi_tv`
 server (on port 3000): `forever -w server.js `
-client (on port 5000): `cd app && server -p 5000`
+client (on port 5000): `cd app && serve -p 5000`
 
 
 # idea is

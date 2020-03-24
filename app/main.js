@@ -28,20 +28,27 @@ $(document).ready(function(){
 
   // this is data brought over from JSON - all channels with all possible filenames
   var channel_data = new Array();
+  var boring_data = {};
 
   // this is whatever is currently playing
   var current_state = new Array();
 
-  // track your current channel globally  
+  // track your current channel globally
   var currchannel;
-  
+
   $.getJSON( "http://localhost:3000/tvguide", function( data ) {
     var channels = data.guide;
     //console.log(channels)
     $.each( channels, function( key, val ) {
-      channel_data.push( val );
-    });
+      console.log(val);
+      if (val.channel == 'LATER') {
+        boring_data = val
+      } else {
+        channel_data.push( val );
+      }
 
+    });
+    console.log(channel_data)
     setupTV()
   });
 
@@ -53,24 +60,25 @@ $(document).ready(function(){
       var turnedOnAt = new Date();
       // make initial channel_data object
       for (i in channel_data) {
+        console.log(i+ "   ---  "+channel_data[i])
         if (channel_data[i]['shows'].length > 0) {
           // select the first show to start with
           var current_state_for_this_channel = channel_data[i]['shows'][0];
-          // keep track of which show in channel.shows is currently playing 
+          // keep track of which show in channel.shows is currently playing
           // assuming all channels have at least one show, this initial setup should always work
           current_state_for_this_channel['show_i'] = 0;
           current_state_for_this_channel['startTime'] = turnedOnAt;
 
           current_state.push( current_state_for_this_channel )
         }
-       
+
       }
 
       console.log("------");
       console.log(current_state)
       // INITIAL SHOW SET
       tvPlayer.src(USB_ROOT + (currchannel+1) + '/' + current_state[currchannel]['filename']);
- 
+
       // initialize key listeners
       // TODO - debounce for remote
 
@@ -93,7 +101,7 @@ $(document).ready(function(){
 
       window.addEventListener('keyup', keyTester);
       // $(document).keyup(function(e) {
-        
+
       // });
 
         $("#up").click(function(){
@@ -136,10 +144,10 @@ $(document).ready(function(){
         console.log("play at "+newtime);
 
         tvPlayer.currentTime(newtime);
-        tvPlayer.play(); 
+        tvPlayer.play();
     });
 
-    tvPlayer.on('loadeddata', function(e){ 
+    tvPlayer.on('loadeddata', function(e){
 
     tvPlayer.pause();
       var now = new Date();
@@ -154,7 +162,7 @@ $(document).ready(function(){
         cardTimer = setTimeout(function() {
 
           console.log("PLAY - AFTER TIMEOUT!")
-          tvPlayer.play(); 
+          tvPlayer.play();
           console.log("loaded data!!!!", e)
 
          $("#card").removeClass("changechannel");
@@ -162,7 +170,7 @@ $(document).ready(function(){
 
       }
       else {
-        tvPlayer.play(); 
+        tvPlayer.play();
         console.log("PLAY - your card has been up long enough")
        // console.log("loaded data!!!!", e)
 
@@ -194,7 +202,7 @@ $(document).ready(function(){
     // set correct starttime...
     // FOR NOW, just start the new file right now, ok man?
     var new_current_state_for_this_channel = channel_data[currchannel]['shows'][curr_show_i];
-    // keep track of which show in channel.shows is currently playing 
+    // keep track of which show in channel.shows is currently playing
     // assuming all channels have at least one show, this initial setup should always work
     new_current_state_for_this_channel['show_i'] = curr_show_i;
     new_current_state_for_this_channel['startTime'] = newStartTime;
@@ -258,7 +266,7 @@ $(document).ready(function(){
   var onoffanimation = new TimelineMax({
     paused: true
   });
-  
+
   onoffanimation
   .to($("#video-container"), .2, {
     width: '100vw',

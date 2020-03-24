@@ -1,4 +1,4 @@
-require('babel-register');  
+require('babel-register');
 const express = require('express');
 const app = express();
 
@@ -22,56 +22,54 @@ var my_guide = new TVGuide();
 
 var router = express.Router();
 // router.get('/', function(req, res) {
-//     res.json({ message: 'hooray! welcome to our api!' });   
+//     res.json({ message: 'hooray! welcome to our api!' });
 // });
 router.route('/tvguide')
 	.get(function(req, res) {
 		var tvguide = my_guide.createTvGuide();
 		console.log("oy");
 		console.log(tvguide);
-		var foo = { 
-			guide: [
-				{channel: 1,
-				 cardbg: 'channelcard_1.jpg',
-				 shows: [
-				 	{ filename: 'flightofdragons.mp4',
-				 	 showname: 'Flight of Dragons'
-				 	},
-				 	// { filename: 'wallE.mp4',
-				 	//  showname: 'Wall-E'
-				 	// },
-				 	// { filename: 'LIGHT YEARS (aka Gandahar).mp4',
-				 	//  showname: 'Gandahar'
-				 	// }
-				 ]
-				},
-				{channel: 2,
-				 cardbg: 'channelcard_2.jpg',
-				 shows: [
-				 	{ filename: 'commercialtest.mp4',
-				 	 showname: 'a weird german atari commercial'
-				 	},
-				 	{ filename: 'jewels.mp4',
-				 	 showname: 'Beautiful JEWELES'
-				 	}
-				 ]
-				},
 
-				{channel: 3,
-				 cardbg: 'channelcard_3.jpg',
-				 shows: [
-				 	{ filename: 'killerwhale.mp4',
-				 	 showname: 'Jean-Michel Cousteau: Ocean Adventures<br><span>Call of the Killer Whale</span>'
-				 	},
-				 	{ filename: 'PBS.Independant.Lens.2013.Beauty.is.Embarrassing.540p.x264.AAC.MVGroup.org.mp4',
-				 	 showname: 'Beauty Is Embarrassing'
-				 	},
-				 	{ filename: 'jacquecousteau.whales.mp4',
-				 	 showname: 'The Undersea World of Jacque Cousteau: Whales'
-				 	}
-				 ]
-				}
-			]}
-		res.json( tvguide  );
+    res.json( tvguide  );
+
+    // for testing:
+		// var foo = {
+		// 	guide: [
+		// 		{channel: 1,
+		// 		 cardbg: 'channelcard_1.jpg',
+		// 		 shows: [
+		// 		 	{ filename: 'hudsonpark.mp4',
+		// 		 	 showname: 'Hudson in the park'
+		// 		 	},
+		// 		 	// { filename: 'wallE.mp4',
+		// 		 	//  showname: 'Wall-E'
+		// 		 	// },
+		// 		 	// { filename: 'LIGHT YEARS (aka Gandahar).mp4',
+		// 		 	//  showname: 'Gandahar'
+		// 		 	// }
+		// 		 ]
+		// 		},
+		// 		{channel: 2,
+		// 		 cardbg: 'channelcard_2.jpg',
+		// 		 shows: [
+		// 		 	{ filename: 'xmaskillkeytar_freezepop_show.mp4',
+		// 		 	 showname: 'kill keytar'
+		// 		 	},
+		// 		 	{ filename: 'raspberryberet.mp4',
+		// 		 	 showname: 'raspberry beret'
+		// 		 	}
+		// 		 ]
+		// 		},
+    //
+		// 		{channel: 3,
+		// 		 cardbg: 'channelcard_3.jpg',
+		// 		 shows: [
+		// 		 	{ filename: 'leysin.mp4',
+		// 		 	 showname: 'leysin'
+		// 		 	}
+		// 		 ]
+		// 		}
+		// 	]}
+	//	res.json( foo  );
 	});
 app.use('/', router);

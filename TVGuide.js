@@ -2,23 +2,23 @@
 /*
 *   WNPI TV looper
 *   Scheduling will eventually be done via a google doc that gets pulled
-*    down every 24 hours into - 
+*    down every 24 hours into -
 *		https://docs.google.com/spreadsheets/d/1GWwkK9Phqy_kOh35o0MD36Ba97p9zW_YHf8oWEcCDl0/edit#gid=0
 *
 *
 */
 var moment = require('moment');
 //  var getDuration = require('get-video-duration');
- 
- 
+
+
 var fs = require('fs'),
     path = require('path');
- 
+
 
 
 //var SPREADSHEET_ID = '1GWwkK9Phqy_kOh35o0MD36Ba97p9zW_YHf8oWEcCDl0';
-var SRC_LOCATION = "/media/pi/WNPI_SRC/wnpi";
-//var SRC_LOCATION = "/Users/aholtgraver/Projects/personal/wnpi/wnpi_tv/app/videos"
+//var SRC_LOCATION = "/Volumes/VIDEOS/wnpi/";
+var SRC_LOCATION = "/Users/ashley/Projects/wnpi/wnpi_tv/app/videos/"
 
 
 let instance = null;
@@ -36,56 +36,87 @@ module.exports = class TvGuide {
 
         return instance;
     }
-    
+
 
     dirTree(filename) {
         console.log("working: "+filename)
-
         var stats = fs.lstatSync(filename);
         var info = {};
 
-        if ( (path.basename(filename) == 'wnpi') && stats.isDirectory()) {
+        console.log(path.basename(filename));
+      // console.log (  )
+      // console.log( 'is it a directory?')
+      // console.log(stats.isDirectory())
+      // console.log("IS IT ???")
+      // console.log( (path.basename(filename) == 'videos') && ( stats.isDirectory() ))
+
+
+        if ( (path.basename(filename) == 'videos') && (stats.isDirectory())  ) {
             // filename is root directory, make guide root and don't worry about any other info
-           
             info.guide = fs.readdirSync(filename).map(function(child) {
-                return instance.dirTree(filename + '/' + child);
+
+                  if (path.basename(filename) != '.DS_Store') {
+
+                                      console.log("hey ")
+                                        return instance.dirTree(filename + '/' + child);
+                  }
             });
 
         } else if (!isNaN(parseInt(path.basename(filename))) && stats.isDirectory() ) {
             // foldername is an integer
             info.channel = parseInt(path.basename(filename));
             info.cardbg = 'channelcard_' + path.basename(filename) + '.jpg';
+
+                console.log("ho ")
             info.shows = fs.readdirSync(filename).map(function(child) {
                 return instance.dirTree(filename + '/' + child);
             });
 
-        } else if ( !stats.isDirectory() 
-                    && (path.basename(filename)).substring(0,2) != '._' 
+        } else if ( (path.basename(filename) == 'LATER') && stats.isDirectory() ) {
+              // foldername is 'LATER
+              info.channel = 'LATER';
+              info.cardbg = 'channelcard_' + path.basename(filename) + '.jpg';
+
+                  console.log("later ")
+              info.shows = fs.readdirSync(filename).map(function(child) {
+                  return instance.dirTree(filename + '/' + child);
+              });
+
+          } else if ( !stats.isDirectory()
+                    && (path.basename(filename)).substring(0,2) != '._'
                     && (/\.(mov|mp4)$/i).test(path.basename(filename))) {
             // mp4/mov file!
-         
+
+                console.log("blerg ")
             info.filename = path.basename(filename);
         }
+
         return info;
-    }
- 
+      }
+
+
 
 
     createTvGuide() {
        var currFolder = SRC_LOCATION;
 
        // start at first 'content' listing, go until next (wrapping around if necessary)
+       if (fs.existsSync(SRC_LOCATION + ".DS_Store")) {
+         fs.unlinkSync(SRC_LOCATION + ".DS_Store");
+       }
+
         var tvguide = instance.dirTree(SRC_LOCATION);
         console.log("wtf");
-        console.log(tvguide)
-      
-        for ( var i=0; i<tvguide.guide.length; i++) {
+        console.log(tvguide);
 
+        for ( var i=0; i<tvguide.guide.length; i++) {
+          console.log(tvguide.guide[i])
+          if (tvguide.guide[i] != {}) {
             for( var j=tvguide.guide[i].shows.length-1; j>-1; j--) {
 
                 var isEmptyObj = (Object.keys(tvguide.guide[i].shows[j]).length === 0 && tvguide.guide[i].shows[j].constructor === Object)
                 //console.log(tvguide.guide[i].shows[j] + " is "+isEmptyObj)
-               
+
                 // if ( i==4) {
                 //     console.log(tvguide.guide[i].shows);
                 //     console.log(j, isEmptyObj)
@@ -95,8 +126,9 @@ module.exports = class TvGuide {
                     // keep track of js that shall be deleted
                     // delete from shows
                     tvguide.guide[i].shows.splice(j, 1);
-                    
+
                 }
+              }
             }
         }
 
@@ -116,7 +148,7 @@ module.exports = class TvGuide {
         // }
     }
 
-   
+
 
 
 /*******
@@ -134,8 +166,8 @@ old format when I was using spreadsheet reader
         //     //console.log('channels:', channels);
         //     instance.createTvGuide();
         // })
-        // .catch(function(err){ 
-        //     //console.log("ERRAR", err); 
+        // .catch(function(err){
+        //     //console.log("ERRAR", err);
         // });
 
     }
@@ -152,7 +184,7 @@ old format when I was using spreadsheet reader
         for (let i=0; i<instance.channels.length; i++) {
 
             for (let j=0; j<instance.channels[i]['content'].length; j++) {
-                  
+
                 var line = instance.channels[i]['content'][j];
                 if (line['content'] != null) {
                     console.log(line['content'])
@@ -166,7 +198,7 @@ old format when I was using spreadsheet reader
 
                 }
             }
-           
+
         }
 
         for (let i=0; i<instance.folders.length; i++) {
@@ -216,9 +248,8 @@ old format when I was using spreadsheet reader
 
         instance.initialized = true;
         return instance.channels;
-        
+
     }
 
     *********/
 }
-

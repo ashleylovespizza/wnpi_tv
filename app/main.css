@@ -65,7 +65,7 @@ body {
   */
   background: #fff;
   background-size: cover;
-  
+
 }
 .video-js {
 	background: #fff;
@@ -74,13 +74,13 @@ body, #tv-player { background: #000;  }
 
 video, #tv-player, .video-js, .vjs-default-skin
 {
-  position: fixed; 
-  right: 0; 
+  position: fixed;
+  right: 0;
   bottom: 0;
-  min-width: 100%; 
+  min-width: 100%;
   min-height: 100%;
-  width: auto; 
-  height: auto; 
+  width: auto;
+  height: auto;
   z-index: -100;
 }
 
@@ -149,7 +149,7 @@ video, #tv-player, .video-js, .vjs-default-skin
 	top: 4%;
 	left: 0;
 	right: 0;
-	bottom: 8%;
+	bottom: 5%;
 	text-align: left;
 
 }
@@ -160,6 +160,15 @@ video, #tv-player, .video-js, .vjs-default-skin
 	font-size: 38px;
     text-shadow: 2px 2px #000000;
     color: white;
+}
+#channelnumber {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	font-size: 80vh;
+	font-family: sans-serif;
 }
 
 #card p {
@@ -208,7 +217,7 @@ video, #tv-player, .video-js, .vjs-default-skin
 	position: absolute;
 	bottom: 0;
 	right: 0;
-	padding-right: 8%;
+	padding-right: 6%;
 }
 
 #controls {

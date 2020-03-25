@@ -37,6 +37,12 @@ module.exports = class TvGuide {
         return instance;
     }
 
+    shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
 
     dirTree(filename) {
         console.log("working: "+filename)
@@ -130,6 +136,9 @@ module.exports = class TvGuide {
                 }
               }
             }
+
+            // randomize this shows array
+            instance.shuffle(tvguide.guide[i].shows);
         }
 
         return tvguide;
@@ -147,109 +156,4 @@ module.exports = class TvGuide {
 
         // }
     }
-
-
-
-
-/*******
-old format when I was using spreadsheet reader
-
-
- init() {
-
-
-       // instance.createTvGuide();
-        // require('./spreadsheetReader.js')
-        // .then(function(results){
-        //     //console.log("THEN!!!")
-        //     instance.channels = results;
-        //     //console.log('channels:', channels);
-        //     instance.createTvGuide();
-        // })
-        // .catch(function(err){
-        //     //console.log("ERRAR", err);
-        // });
-
-    }
-
-    createTvGuide() {
-        console.log('create tv guide');
-        // assume all folders rn
-        var prevFolder = null;
-        var currFolder = null;
-        var mostRecentStart = null;
-        var mostRecentLength = null;
-
-        // first, get all folders used
-        for (let i=0; i<instance.channels.length; i++) {
-
-            for (let j=0; j<instance.channels[i]['content'].length; j++) {
-
-                var line = instance.channels[i]['content'][j];
-                if (line['content'] != null) {
-                    console.log(line['content'])
-                    var folder = SRC_LOCATION + line['content'];
-                    instance.folders.push(folder);
-                    // and get its length
-                    getDuration(folder).then((duration) => {
-                      console.log(duration);
-                    });
-
-
-                }
-            }
-
-        }
-
-        for (let i=0; i<instance.folders.length; i++) {
-          //  console.log(instance.folders[i])
-        }
-
-
-        for (let i=0; i<instance.channels.length; i++) {
-            if (instance.channels[i]['content'] != null) {
-
-             // console.log('look into ', instance.channels[i]['content']);
-              currFolder = SRC_LOCATION + instance.channels[i]['content'];
-
-              // start at first 'content' listing, go until next (wrapping around if necessary)
-
-
-              // FOLDERS[folderName] = [];
-
-              // if (FOLDERS[folderName].length == 0) {
-              //   var files = fs.readdirSync(folderName);
-              //   for (f in files) {
-              //     if ( (/\.(avi|mov|mkv|mp4)$/i).test(files[f])) {
-              //       FOLDERS[folderName].push(files[f])
-              //     }
-
-              //   }
-
-              // }
-            }
-            if (currFolder != null) {
-                // if (prevFolder == null) {
-                //     // happening for the FIRST TIME
-                //     prevFolder  = currFolder;
-                // }
-
-                // if (mostRecentStart == null) {
-                //     // let's start something
-                // }
-                // // if (current time - most recent start time) - the lenght of whatever it thinks it's playing rn is less than 30 min)
-                // if ( ((instance.channels[i]['time'] - mostRecentStart) - mostRecentLength) < 30) {
-
-                // }
-
-            }
-        }
-
-
-        instance.initialized = true;
-        return instance.channels;
-
-    }
-
-    *********/
 }

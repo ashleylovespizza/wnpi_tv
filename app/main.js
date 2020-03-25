@@ -4,7 +4,10 @@ $(document).ready(function(){
   var USB_ROOT = "videos/" //"/Volumes/WNPI_SRC/wnpi/"
   var CARDIMAGES_ROOT = "cardimages/";
   var MIN_CARD_TIME = 1200;
+  var SWITCH_TO_BORING = 1 * 60 * 1000; // 30 minutes
+  var SWITCH_TO_ADULT_HOUR = 20;
 
+  var TURNED_ON_AT = new Date();
   var lastChannelChange = new Date();
   var cardTimer = null;
 
@@ -16,16 +19,6 @@ $(document).ready(function(){
   });
   window.tvPlayer = tvPlayer;
 
-
-  // OLD:
-  // var channel_data = [
-  //   { "video": "stallman.mkv",
-  //     "startTime": 0,
-  //     "cardbg": "channelcard_1.jpg",
-  //     "showname": "Afternoon Matinee: Wall-E"
-  //   }....
-  // ];
-
   // this is data brought over from JSON - all channels with all possible filenames
   var channel_data = new Array();
   var boring_data = {};
@@ -35,6 +28,8 @@ $(document).ready(function(){
 
   // track your current channel globally
   var currchannel;
+
+
 
   $.getJSON( "http://localhost:3000/tvguide", function( data ) {
     var channels = data.guide;
@@ -48,7 +43,9 @@ $(document).ready(function(){
       }
 
     });
-    console.log(channel_data)
+
+
+    console.log(boring_data);
     setupTV()
   });
 
@@ -222,9 +219,29 @@ $(document).ready(function(){
   /////////////////////
   function updateChannel(){
 
-    console.log("now play "+USB_ROOT + (currchannel+1) + '/' + current_state[currchannel]['filename'])
     tvPlayer.pause();
-    tvPlayer.src(USB_ROOT + (currchannel+1) + '/' + current_state[currchannel]['filename']);
+
+
+
+    var now = new Date();
+
+    console.log("first: "+!(now.getHours() > SWITCH_TO_ADULT_HOUR));
+    console.log("second: "+((now.getTime() - TURNED_ON_AT.getTime())<SWITCH_TO_BORING));
+    // if it's before ADULT HOUR and after our SWITCH TO BORING time...
+    if ( !(now.getHours() > SWITCH_TO_ADULT_HOUR) && ((now.getTime() - TURNED_ON_AT.getTime())>SWITCH_TO_BORING)) {
+      // show boring content
+      console.log("boring time!")
+      tvPlayer.src(USB_ROOT + 'LATER' + '/' + boring_data['shows'][0]['filename']);
+
+    } else {
+      // show intended file for that channel
+      console.log("now play "+USB_ROOT + (currchannel+1) + '/' + current_state[currchannel]['filename'])
+
+      tvPlayer.src(USB_ROOT + (currchannel+1) + '/' + current_state[currchannel]['filename']);
+      
+
+    //  *******
+    }
   }
 
 

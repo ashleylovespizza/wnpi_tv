@@ -48,7 +48,8 @@ module.exports = class TvGuide {
       // console.log( (path.basename(filename) == 'videos') && ( stats.isDirectory() ))
 
 
-        if ( (path.basename(filename) == 'videos') && (stats.isDirectory())  ) {
+        if ( ((path.basename(filename) == 'videos')|| (path.basename(filename) == 'wnpi') )
+             && (stats.isDirectory())  ) {
             // filename is root directory, make guide root and don't worry about any other info
             info.guide = fs.readdirSync(filename).map(function(child) {
 

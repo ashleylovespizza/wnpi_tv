@@ -6,9 +6,10 @@ $(document).ready(function(){
   var MIN_CARD_TIME = 1200;
   var SWITCH_TO_BORING = 1 * 60 * 1000; // 30 minutes
   var SWITCH_TO_ADULT_HOUR = 20;
+  var VOLUME = 1;
 
-  var TURNED_ON_AT = new Date();
-  var lastChannelChange = new Date();
+  var TURNED_ON_AT = null;
+  var lastChannelChange = null;
   var cardTimer = null;
 
   var tvPlayer = videojs('tv-player', {
@@ -46,7 +47,7 @@ $(document).ready(function(){
 
 
     console.log(boring_data);
-    setupTV()
+    setupKeyListeners();
   });
 
 
@@ -74,40 +75,10 @@ $(document).ready(function(){
       console.log("------");
       console.log(current_state)
       // INITIAL SHOW SET
-      tvPlayer.src(USB_ROOT + (currchannel+1) + '/' + current_state[currchannel]['filename']);
+      //tvPlayer.src(USB_ROOT + (currchannel+1) + '/' + current_state[currchannel]['filename']);
 
-      // initialize key listeners
-      // TODO - debounce for remote
 
-      /*
-      var myEfficientFn = debounce(function() {
-  // All the taxing stuff you do
-}, 250); */
-
-      var keyTester = debounce(function(e) {
-        var code = e.keyCode || e.which;
-         if(code == 38) { //Enter keycode
-          //alert("up")
-          changeChannel('up');
-         }
-         if(code == 40) { //Enter keycode
-           //alert("DOWN")
-          changeChannel('down');
-         }
-      }, 300);
-
-      window.addEventListener('keyup', keyTester);
-      // $(document).keyup(function(e) {
-
-      // });
-
-        $("#up").click(function(){
-          changeChannel('up');
-        })
-
-        $("#down").click(function(){
-          changeChannel('down');
-        })
+      tvPlayer.volume(1);
 
     // videojs content listeners
 
@@ -119,7 +90,6 @@ $(document).ready(function(){
     })
 
     tvPlayer.on('loadedmetadata', function(e){
-
         tvPlayer.pause();
         console.log("loaded META data!!!!", e)
 
@@ -145,8 +115,7 @@ $(document).ready(function(){
     });
 
     tvPlayer.on('loadeddata', function(e){
-
-    tvPlayer.pause();
+      tvPlayer.pause();
       var now = new Date();
       var timeDiff = Math.abs(now.getTime() - lastChannelChange.getTime());
       console.log(timeDiff)
@@ -173,7 +142,6 @@ $(document).ready(function(){
 
        $("#card").removeClass("changechannel");
       }
-
     })
 
 
@@ -238,7 +206,7 @@ $(document).ready(function(){
       console.log("now play "+USB_ROOT + (currchannel+1) + '/' + current_state[currchannel]['filename'])
 
       tvPlayer.src(USB_ROOT + (currchannel+1) + '/' + current_state[currchannel]['filename']);
-      
+
 
     //  *******
     }
@@ -277,6 +245,7 @@ $(document).ready(function(){
 
 
 
+
   // POWER ON OFF
   //////////////////
 
@@ -300,24 +269,94 @@ $(document).ready(function(){
     background: '#ffffff'
   });
 
-  $("#onoff").click(function(){
-    $('#onoff').toggleClass('on');
+function toggleOnOff() {
+  $('#onoff').toggleClass('on');
 
-    if ($("#onoff").hasClass("on")) {
-      // on!
-       onoffanimation.reverse();
+  if ($("#onoff").hasClass("on")) {
 
-      //$("#guard").removeClass("off");
-      tvPlayer.play();
-      updateChannel();
-    } else {
-      // turn off
+    // on for the first time?
+    if (TURNED_ON_AT == null){
+      // on for the first time!!
+        TURNED_ON_AT = new Date();
+        lastChannelChange = new Date();
+        setupTV();
+    }
+    // on!
+     onoffanimation.reverse();
+
+    //$("#guard").removeClass("off");
+    tvPlayer.play();
+    updateChannel();
+  } else {
+    // turn off
     onoffanimation.restart();
-      tvPlayer.pause();
-      //$("#guard").addClass("off");
+    tvPlayer.pause();
+    //$("#guard").addClass("off");
+  }
+
+}
+
+$("#onoff").click(toggleOnOff)
+
+
+  /*****
+  *  spacebar - on/onoff
+  *  up - channel up
+  *  DOWN - channel down
+  *  left - volume up
+  *  right - volume down
+  *****/
+
+function setupKeyListeners() {
+  var keyTester = debounce(function(e) {
+    var code = e.keyCode || e.which;
+
+    console.log(code)
+
+    if(code == 32) { // spacebar
+      //on/off
+      toggleOnOff();
     }
 
-  })
+    // only if 'on' let volume/channels work
+    if ( $("#onoff").hasClass("on")) {
+       if(code == 38) { //UP keycode
+        //alert("up")
+        changeChannel('up');
+       }
+       if(code == 40) { //DOWN keycode
+         //alert("DOWN")
+        changeChannel('down');
+       }
 
+       if(code == 39) { //RIGHT keycode
+         //volume up
+         if (VOLUME < 1) {
+           VOLUME += .1;
+           tvPlayer.volume(VOLUME);
+         }
+
+       }
+       if(code == 37) { //LEFT keycode
+         //volume down
+         if (VOLUME > 0) {
+           VOLUME -= .1;
+           tvPlayer.volume(VOLUME);
+         }
+       }
+    }
+  }, 200);
+
+  window.addEventListener('keyup', keyTester);
+
+    $("#up").click(function(){
+      changeChannel('up');
+    })
+
+    $("#down").click(function(){
+      changeChannel('down');
+    })
+
+}
 
 })

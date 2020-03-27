@@ -1,25 +1,16 @@
 "use strict";
 /*
 *   WNPI TV looper
-*   Scheduling will eventually be done via a google doc that gets pulled
-*    down every 24 hours into -
-*		https://docs.google.com/spreadsheets/d/1GWwkK9Phqy_kOh35o0MD36Ba97p9zW_YHf8oWEcCDl0/edit#gid=0
-*
-*
 */
 var moment = require('moment');
-//  var getDuration = require('get-video-duration');
-
-
 var fs = require('fs'),
     path = require('path');
 
+// on mac -
+//var SRC_LOCATION = "/Users/ashley/Projects/wnpi/wnpi_tv/app/videos/"
 
-
-//var SPREADSHEET_ID = '1GWwkK9Phqy_kOh35o0MD36Ba97p9zW_YHf8oWEcCDl0';
-//var SRC_LOCATION = "/Volumes/VIDEOS/wnpi/";
-var SRC_LOCATION = "/Users/ashley/Projects/wnpi/wnpi_tv/app/videos/"
-
+// on raspi -
+var SRC_LOCATION = "/media/pi/WNPI_SRC/wnpi";
 
 let instance = null;
 

@@ -7,10 +7,10 @@ var fs = require('fs'),
     path = require('path');
 
 // on mac -
-//var SRC_LOCATION = "/Users/ashley/Projects/wnpi/wnpi_tv/app/videos/"
+var SRC_LOCATION = "/Users/ashley/Projects/wnpi/wnpi_tv/app/videos/"
 
 // on raspi -
-var SRC_LOCATION = "/media/pi/WNPI_SRC/wnpi";
+//var SRC_LOCATION = "/media/pi/WNPI_SRC/wnpi";
 
 let instance = null;
 

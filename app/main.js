@@ -330,6 +330,18 @@ function setupKeyListeners() {
           //alert("DOWN")
          changeChannel('down');
         }
+        if(code == 77) { //LEFT keycode
+          //alert("DOWN")
+          if(VOLUME == 0) {
+
+           tvPlayer.volume(1);
+           VOLUME = 1;
+         } else {
+
+          tvPlayer.volume(0);
+          VOLUME = 0;
+         }
+        }
 
        // if(code == 38) { //UP keycode
        //  //alert("up")

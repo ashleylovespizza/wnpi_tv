@@ -1,7 +1,7 @@
 #!/bin/bash
 sleep 2s
 
-if pgrep -f server.js > /dev/null
+if ! pgrep -f server.js &> /dev/null
 then
   echo "starting WNPI server!"
   cd /home/pi/wnpi/wnpi_tv

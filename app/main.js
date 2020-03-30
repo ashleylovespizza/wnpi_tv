@@ -319,31 +319,41 @@ function setupKeyListeners() {
     }
 
     // only if 'on' let volume/channels work
+
+    // channels (up/down) are fucked hardware wise - temporarily change to make left/right (volume) be chanel control
     if ( $("#onoff").hasClass("on")) {
-       if(code == 38) { //UP keycode
-        //alert("up")
-        changeChannel('up');
-       }
-       if(code == 40) { //DOWN keycode
-         //alert("DOWN")
-        changeChannel('down');
-       }
+        if(code == 39) { //RIGHT keycode
+         //alert("up")
+         changeChannel('up');
+        }
+        if(code == 37) { //LEFT keycode
+          //alert("DOWN")
+         changeChannel('down');
+        }
 
-       if(code == 39) { //RIGHT keycode
-         //volume up
-         if (VOLUME < 1) {
-           VOLUME += .1;
-           tvPlayer.volume(VOLUME);
-         }
-
-       }
-       if(code == 37) { //LEFT keycode
-         //volume down
-         if (VOLUME > 0) {
-           VOLUME -= .1;
-           tvPlayer.volume(VOLUME);
-         }
-       }
+       // if(code == 38) { //UP keycode
+       //  //alert("up")
+       //  changeChannel('up');
+       // }
+       // if(code == 40) { //DOWN keycode
+       //   //alert("DOWN")
+       //  changeChannel('down');
+       // }
+       //
+       // if(code == 39) { //RIGHT keycode
+       //   //volume up
+       //   if (VOLUME < 1) {
+       //     VOLUME += .1;
+       //     tvPlayer.volume(VOLUME);
+       //   }
+       // }
+       // if(code == 37) { //LEFT keycode
+       //   //volume down
+       //   if (VOLUME > 0) {
+       //     VOLUME -= .1;
+       //     tvPlayer.volume(VOLUME);
+       //   }
+       // }
     }
   }, 200);
 

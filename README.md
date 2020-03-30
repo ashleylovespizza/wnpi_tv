@@ -46,6 +46,10 @@ in /home/pi/.config/lxsession/LXDE-pi/autostart  :
 - then, in .bashrc ./superscript in ~ is launched
 which sleeps and then launches the raspberry pi startwnpiservers.sh
 
+- meanwhile, in cron -
+11:30am restart
+00:00 restart
+03:00 rsync with usb stick
 
 # TODO
 - the @sh line above doens't seem to be working

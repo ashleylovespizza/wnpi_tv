@@ -2,14 +2,14 @@
 sleep 2s
 
 
-if pidof -x  /home/pi/.nvm/versions/node/v8.9.4/bin/node /home/pi/wnpi/wnpi_tv/server.js > /dev/null
-then
+#if pidof -x  /home/pi/.nvm/versions/node/v8.9.4/bin/node /home/pi/wnpi/wnpi_tv/server.js > /dev/null
+#then
 
   cd /home/pi/wnpi/wnpi_tv
   forever server.js &
-else
-    echo "WNPI server already running."
-fi
+#else
+#    echo "WNPI server already running."
+#fi
 
 
 

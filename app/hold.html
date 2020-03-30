@@ -2,25 +2,26 @@
 <head>
 <script type="text/javascript">
 
-var clientURL = 'http://localhost:5001';
+var clientURL = 'http://localhost:3000';
 //var serverURL = 'http://localhost:3000/tvguide';
 
+//
+// var startDate= new Date(2010, 12, 21, 5, 00, 0, 0), // today 5am
+//     nowDate = new Date();
+// var startTime = startDate.getTime(),
+//     nowTime = nowDate.getTime();
 
-var startDate= new Date(2010, 12, 21, 5, 00, 0, 0), // today 5am
-    nowDate = new Date();
-var startTime = startDate.getTime(),
-    nowTime = nowDate.getTime();
 
 function testTime() {
-	if (nowTime > startTime) {
+	//if (nowTime > startTime) {
 		setTimeout(function(){
 			window.location.href = clientURL;
-		}, 30000)
-		
-	} else {
-		// test every minute
-		setTimeout(testTime, 60000)
-	}
+		}, 60000)
+
+	// } else {
+	// 	// test every minute
+	// 	setTimeout(testTime, 60000)
+	// }
 }
 testTime();
 
@@ -34,6 +35,6 @@ testTime();
 </style>
 </head>
 <body>
-	
+
 </body>
 </html>

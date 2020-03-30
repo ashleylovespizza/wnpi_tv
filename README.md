@@ -13,17 +13,6 @@ sudo npm install -g http-server
 # raspi pw
 `a tv for george`
 
-# General TODO -
-- get a raspberry pi
-- get a screen
-- get a working remote and flirrccc thing (downstairs?)
-- get content
-- set up shit
-- "start button"
-- set 30 minute timer
-- set up better title cards
-
-- currently - you must delete .DS_Store crap on your own / in a separate rspbi process
 
 # Raspbi specific -
 - set up symlink from webserver folder to USB video folder root... ?????
@@ -39,19 +28,27 @@ sudo npm install -g http-server
 # autoboot stuff
 - in 	
 USE: https://dougbatton.blogspot.com/2016/08/raspberry-pi-3-jessie-auto-start.html
+the below launches chromium in kiosk mode with the hold.html open
+in /home/pi/.config/lxsession/LXDE-pi/autostart  :
+
 @lxpanel --profile LXDE-pi
 @pcmanfm --desktop --profile LXDE-pi
-#@xscreensaver -no-splash
+@xscreensaver -no-splash
 @point-rpi
+
 @xset s off
 @xset -dpms
 @xset noblank
 
-@sh /home/pi/wnpi/wnpi_tv/startwnpiservers.sh
 @sed -i 's/"exited_cleanly": false/"exited_cleanly": true/' ~/.config/chromium/Default/Preferences
-@chromium-browser --noerrdialogs --kiosk file:///home/pi/wnpi_wnpi_tv/app/hold.html --incognito
+@chromium-browser --noerrdialogs --kiosk file:///home/pi/wnpi/wnpi_tv/app/hold.html --incognito
+
+- then, in .bashrc ./superscript in ~ is launched
+which sleeps and then launches the raspberry pi startwnpiservers.sh
 
 
+# TODO
+- the @sh line above doens't seem to be working
 
 # to run
 `cd /home/pi/wnpi/wnpi_tv`

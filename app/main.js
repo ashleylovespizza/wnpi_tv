@@ -4,7 +4,7 @@ $(document).ready(function(){
   var USB_ROOT = "videos/" //"/Volumes/WNPI_SRC/wnpi/"
   var CARDIMAGES_ROOT = "cardimages/";
   var MIN_CARD_TIME = 1200;
-  var SWITCH_TO_BORING = 1 * 60 * 1000; // 30 minutes
+  var SWITCH_TO_BORING = 30 * 60 * 1000; // 30 minutes
   var SWITCH_TO_ADULT_HOUR = 20;
   var VOLUME = 1;
 

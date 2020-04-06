@@ -194,9 +194,12 @@ $(document).ready(function(){
     var now = new Date();
 
     console.log("first: "+!(now.getHours() > SWITCH_TO_ADULT_HOUR));
-    console.log("second: "+((now.getTime() - TURNED_ON_AT.getTime())<SWITCH_TO_BORING));
+    console.log("second: "+((now.getTime() - TURNED_ON_AT.getTime()) > SWITCH_TO_BORING));
+  //  debugger
     // if it's before ADULT HOUR and after our SWITCH TO BORING time...
-    if ( !(now.getHours() > SWITCH_TO_ADULT_HOUR) && ((now.getTime() - TURNED_ON_AT.getTime())>SWITCH_TO_BORING)) {
+    if ( //!(now.getHours() > SWITCH_TO_ADULT_HOUR) &&
+        ((now.getTime() - TURNED_ON_AT.getTime()) > SWITCH_TO_BORING)
+      ) {
       // show boring content
       console.log("boring time!")
       tvPlayer.src(USB_ROOT + 'LATER' + '/' + boring_data['shows'][0]['filename']);

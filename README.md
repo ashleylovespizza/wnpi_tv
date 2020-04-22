@@ -26,14 +26,14 @@ sudo npm install -g http-server
 
 
 # autoboot stuff
-- in 	
+- RASPBERRY PI 3:	
 USE: https://dougbatton.blogspot.com/2016/08/raspberry-pi-3-jessie-auto-start.html
 the below launches chromium in kiosk mode with the hold.html open
 in /home/pi/.config/lxsession/LXDE-pi/autostart  :
 
 @lxpanel --profile LXDE-pi
 @pcmanfm --desktop --profile LXDE-pi
-@xscreensaver -no-splash
+#@xscreensaver -no-splash
 @point-rpi
 
 @xset s off
@@ -42,6 +42,12 @@ in /home/pi/.config/lxsession/LXDE-pi/autostart  :
 
 @sed -i 's/"exited_cleanly": false/"exited_cleanly": true/' ~/.config/chromium/Default/Preferences
 @chromium-browser --noerrdialogs --kiosk file:///home/pi/wnpi/wnpi_tv/app/hold.html --incognito
+
+- RASPBERRY PI 4:
+sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
+
+same as above, but last line is instead --
+/usr/bin/chromium-browser --disable-restore-session-state --kiosk 
 
 - then, in .bashrc ./superscript in ~ is launched
 which sleeps and then launches the raspberry pi startwnpiservers.sh

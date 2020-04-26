@@ -43,6 +43,8 @@ in /home/pi/.config/lxsession/LXDE-pi/autostart  :
 @sed -i 's/"exited_cleanly": false/"exited_cleanly": true/' ~/.config/chromium/Default/Preferences
 @chromium-browser --noerrdialogs --kiosk file:///home/pi/wnpi/wnpi_tv/app/hold.html --incognito
 
+
+
 - then, in .bashrc ./superscript in ~ is launched
 which sleeps and then launches the raspberry pi startwnpiservers.sh
 
@@ -50,6 +52,12 @@ which sleeps and then launches the raspberry pi startwnpiservers.sh
 11:30am restart
 00:00 restart
 03:00 rsync with usb stick
+
+0 0 * * * sudo shutdown -r now # JOB_ID_1
+30 11 * * * sudo shutdown -r now # JOB_ID_2
+0 3 * * * rsync -av /media/pi/WNPI_SRC/wnpi/ videos # JOB_ID_3
+
+
 
 # TODO
 - the @sh line above doens't seem to be working

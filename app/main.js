@@ -1,11 +1,11 @@
 $(document).ready(function(){
 
 // relative roots
-  var USB_ROOT = "videos/" //"/Volumes/WNPI_SRC/wnpi/"
+  var USB_ROOT = "/videos/";
+  var ADULT_USB_ROOT = "/videos/ADULT/"
   var CARDIMAGES_ROOT = "cardimages/";
   var MIN_CARD_TIME = 1200;
   var SWITCH_TO_BORING = 30 * 60 * 1000; // 30 minutes
-  var SWITCH_TO_ADULT_HOUR = 20;
   var VOLUME = 1;
 
   var TURNED_ON_AT = null;
@@ -37,7 +37,7 @@ $(document).ready(function(){
     //console.log(channels)
     $.each( channels, function( key, val ) {
       console.log(val);
-      if (val.channel == 'LATER') {
+      if (val.channel == 'BORING') {
         boring_data = val
       } else {
         channel_data.push( val );
@@ -45,8 +45,10 @@ $(document).ready(function(){
 
     });
 
-
-    console.log(boring_data);
+    if (data.adultTime ) {
+      USB_ROOT = ADULT_USB_ROOT;
+    }
+    // USB_ROOT =
     setupKeyListeners();
   });
 
@@ -193,18 +195,17 @@ $(document).ready(function(){
 
     var now = new Date();
 
-    console.log("first: "+!(now.getHours() > SWITCH_TO_ADULT_HOUR));
     console.log("second: "+((now.getTime() - TURNED_ON_AT.getTime()) > SWITCH_TO_BORING));
   //  debugger
-    // if it's before ADULT HOUR and after our SWITCH TO BORING time...
-    if ( //!(now.getHours() > SWITCH_TO_ADULT_HOUR) &&
-        ((now.getTime() - TURNED_ON_AT.getTime()) > SWITCH_TO_BORING)
+    if (
+        ((now.getTime() - TURNED_ON_AT.getTime()) > SWITCH_TO_BORING) && (boring_data['shows'][0] != null)
       ) {
       // show boring content
       console.log("boring time!")
-      tvPlayer.src(USB_ROOT + 'LATER' + '/' + boring_data['shows'][0]['filename']);
+      tvPlayer.src(USB_ROOT + 'BORING' + '/' + boring_data['shows'][0]['filename']);
 
-    } else {
+    } // else if it's before ADULT HOUR
+    else {
       // show intended file for that channel
       console.log("now play "+USB_ROOT + (currchannel+1) + '/' + current_state[currchannel]['filename'])
 
@@ -212,7 +213,7 @@ $(document).ready(function(){
 
 
     //  *******
-    }
+  }
   }
 
 

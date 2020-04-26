@@ -7,10 +7,12 @@ var fs = require('fs'),
     path = require('path');
 
 // on mac -
-//var SRC_LOCATION = "/Users/ashley/Projects/wnpi/wnpi_tv/app/videos/"
+var SRC_LOCATION = "/Users/ashley/Projects/wnpi/wnpi_tv/app/videos/"
+var ADULT_SRC_LOCATION = "/Users/ashley/Projects/wnpi/wnpi_tv/app/videos/ADULT/"
+var SWITCH_TO_ADULT_HOUR = 20;
 
 // on raspi -
-var SRC_LOCATION = "/home/pi/wnpi/wnpi_tv/app/videos/";
+//var SRC_LOCATION = "/home/pi/wnpi/wnpi_tv/app/videos/";
 
 let instance = null;
 
@@ -48,15 +50,15 @@ module.exports = class TvGuide {
       // console.log( (path.basename(filename) == 'videos') && ( stats.isDirectory() ))
 
 
-        if ( ((path.basename(filename) == 'videos')|| (path.basename(filename) == 'wnpi') )
+        if ( ((path.basename(filename) == 'videos')|| (path.basename(filename) == 'wnpi') || (path.basename(filename) == 'ADULT'))
              && (stats.isDirectory())  ) {
             // filename is root directory, make guide root and don't worry about any other info
             info.guide = fs.readdirSync(filename).map(function(child) {
 
                   if (path.basename(filename) != '.DS_Store') {
 
-                                      console.log("hey ")
-                                        return instance.dirTree(filename + '/' + child);
+                      console.log("hey ")
+                      return instance.dirTree(filename + '/' + child);
                   }
             });
 
@@ -70,12 +72,12 @@ module.exports = class TvGuide {
                 return instance.dirTree(filename + '/' + child);
             });
 
-        } else if ( (path.basename(filename) == 'LATER') && stats.isDirectory() ) {
+        } else if ( (path.basename(filename) == 'BORING') && stats.isDirectory() ) {
               // foldername is 'LATER
-              info.channel = 'LATER';
+              info.channel = 'BORING';
               info.cardbg = 'channelcard_' + path.basename(filename) + '.jpg';
 
-                  console.log("later ")
+                  console.log("boring ")
               info.shows = fs.readdirSync(filename).map(function(child) {
                   return instance.dirTree(filename + '/' + child);
               });
@@ -97,28 +99,42 @@ module.exports = class TvGuide {
 
     createTvGuide() {
        var currFolder = SRC_LOCATION;
+       var tvguide;
 
        // start at first 'content' listing, go until next (wrapping around if necessary)
        if (fs.existsSync(SRC_LOCATION + ".DS_Store")) {
          fs.unlinkSync(SRC_LOCATION + ".DS_Store");
        }
 
-        var tvguide = instance.dirTree(SRC_LOCATION);
+       var now = new Date();
+       console.log("adult hours?: "+ (now.getHours() >= SWITCH_TO_ADULT_HOUR));
+       if ((now.getHours() >= SWITCH_TO_ADULT_HOUR)) {
+         // it's ADULT HOURS
+         console.log("it's ADULT TIME");
+         SRC_LOCATION = ADULT_SRC_LOCATION;
+       }
+       tvguide = instance.dirTree(SRC_LOCATION);
+
+       if ((now.getHours() >= SWITCH_TO_ADULT_HOUR)) {
+         // it's ADULT HOURS
+         tvguide.adultTime = true;
+       }
+
+
+
         console.log("wtf");
         console.log(tvguide);
 
         for ( var i=0; i<tvguide.guide.length; i++) {
+          console.log(i+" - i:")
           console.log(tvguide.guide[i])
+
           if (tvguide.guide[i] != {}) {
             for( var j=tvguide.guide[i].shows.length-1; j>-1; j--) {
 
-                var isEmptyObj = (Object.keys(tvguide.guide[i].shows[j]).length === 0 && tvguide.guide[i].shows[j].constructor === Object)
-                //console.log(tvguide.guide[i].shows[j] + " is "+isEmptyObj)
+                console.log(j+" - j:")
 
-                // if ( i==4) {
-                //     console.log(tvguide.guide[i].shows);
-                //     console.log(j, isEmptyObj)
-                // }
+                var isEmptyObj = (Object.keys(tvguide.guide[i].shows[j]).length === 0 && tvguide.guide[i].shows[j].constructor === Object)
 
                 if (isEmptyObj) {
                     // keep track of js that shall be deleted
@@ -135,17 +151,5 @@ module.exports = class TvGuide {
 
         return tvguide;
 
-        // FOLDERS[folderName] = [];
-
-        // if (FOLDERS[folderName].length == 0) {
-        //   var files = fs.readdirSync(folderName);
-        //   for (f in files) {
-        //     if ( (/\.(avi|mov|mkv|mp4)$/i).test(files[f])) {
-        //       FOLDERS[folderName].push(files[f])
-        //     }
-
-        //   }
-
-        // }
     }
 }

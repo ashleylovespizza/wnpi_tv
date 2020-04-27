@@ -7,12 +7,15 @@ var fs = require('fs'),
     path = require('path');
 
 // on mac -
-var SRC_LOCATION = "/Users/ashley/Projects/wnpi/wnpi_tv/app/videos/"
-var ADULT_SRC_LOCATION = "/Users/ashley/Projects/wnpi/wnpi_tv/app/videos/ADULT/"
-var SWITCH_TO_ADULT_HOUR = 20;
+//var SRC_LOCATION = "/Users/ashley/Projects/wnpi/wnpi_tv/app/videos/"
+
 
 // on raspi -
-//var SRC_LOCATION = "/home/pi/wnpi/wnpi_tv/app/videos/";
+var SRC_LOCATION = "/home/pi/wnpi/wnpi_tv/app/videos/";
+
+var ADULT_SRC_LOCATION = SRC_LOCATION + "ADULT/";
+var SWITCH_TO_ADULT_HOUR = 20;
+
 
 let instance = null;
 
